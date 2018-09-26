@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">출석스터디</string>
+    <string name="login">로그인</string>
+    <string name="regist">회원가입</string>
+    <string name="loginEmail">이메일를 입력해주세요</string>
+    <string name="loginPassword">패스워드를 입력해주세요</string>
+
+    <string name="nav_header_title">이름(닉네임)</string>
+    <string name="nav_header_subtitle">보통이메일주소 입력함?</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>
