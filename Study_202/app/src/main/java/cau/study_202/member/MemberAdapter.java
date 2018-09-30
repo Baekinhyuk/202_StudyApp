@@ -1,5 +1,6 @@
 package cau.study_202.member;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -29,17 +30,20 @@ import cau.study_202.R;
 public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 
     private MemberList mMemberList;
+    private Activity context = null;
 
-    MemberAdapter(MemberList mMemberList){
+
+    MemberAdapter(Activity context,MemberList mMemberList){
+        this.context = context;
         this.mMemberList = mMemberList;
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView userId;
-        TextView name;
-        TextView nickname;
-        TextView tel;
-        TextView email;
+        protected TextView userId;
+        protected TextView name;
+        protected TextView nickname;
+        protected TextView tel;
+        protected TextView email;
 
         MyViewHolder(View view){
             super(view);

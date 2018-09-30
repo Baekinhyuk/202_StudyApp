@@ -18,6 +18,7 @@ public class Member {
         this.birthday = birthday;
 
     }
+    public  Member(){}
 
     public String getUserId() {
         return userId;
