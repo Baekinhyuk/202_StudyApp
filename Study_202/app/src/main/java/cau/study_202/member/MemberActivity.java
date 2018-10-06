@@ -89,7 +89,7 @@ public class MemberActivity extends AppCompatActivity
         mMemberList.getMembers().clear();
         GetData task = new GetData();
         myAdapter.notifyDataSetChanged();
-        task.execute( "http://" + IP_ADDRESS + "/jsontest.php", "");
+        task.execute( "http://" + IP_ADDRESS +"/jsontest.php", "");
 
 
     }
