@@ -35,6 +35,17 @@
         <activity
             android:name=".RegistActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".BoardList"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="스터기 구인 게시판"/>
+
+        <activity
+            android:name=".Studyrequest"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:label="스터기 구인 게시판"/>
+        <activity
+            android:name=".GroupActivity"/>
     </application>
 
 </manifest>

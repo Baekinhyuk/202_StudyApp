@@ -51,7 +51,7 @@ public class MemberActivity extends AppCompatActivity
     private String mJsonString;
 
     //IP 주소
-    private static String IP_ADDRESS = "192.168.0.90";
+    private static String IP_ADDRESS = "192.168.0.7";
     private static String TAG = "phptest";
     private TextView mTextViewResult;
 
@@ -89,7 +89,7 @@ public class MemberActivity extends AppCompatActivity
         mMemberList.getMembers().clear();
         GetData task = new GetData();
         myAdapter.notifyDataSetChanged();
-        task.execute( "http://" + IP_ADDRESS +"/jsontest.php", "");
+        task.execute( "http://" + IP_ADDRESS +"/member_output.php", "");
 
 
     }
