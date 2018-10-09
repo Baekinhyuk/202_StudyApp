@@ -113,7 +113,7 @@ public class HomeActivity  extends AppCompatActivity
 
         } else if (id == R.id.nav_member) {
             Intent i = new Intent(HomeActivity.this,
-                    MemberActivity.class);
+                    GroupActivity.class);
             startActivity(i);
             finish();
         } else if (id == R.id.nav_attendence) {
