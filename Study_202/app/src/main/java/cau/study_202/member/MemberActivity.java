@@ -304,5 +304,6 @@ public class MemberActivity extends AppCompatActivity
         }
 
     }
+
 }
 
