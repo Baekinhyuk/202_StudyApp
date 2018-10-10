@@ -105,7 +105,7 @@ public class HomeActivity  extends AppCompatActivity
 
         if (id == R.id.nav_searchstudy) {
             Intent i = new Intent(HomeActivity.this,
-                    Search_Studyboard.class);
+                    BoardList.class);
             startActivity(i);
             finish();
             // Handle the camera action
