@@ -49,20 +49,7 @@ public class HomeActivity  extends AppCompatActivity
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
-/*
-            BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
-            navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);*/
 
-            /*뭔가를 눌렀을시 넘어가도록 설정해놓은거 */
-            ImageButton SearchSButton = (ImageButton)findViewById(R.id.Search_Studybtn);
-            SearchSButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    Intent i = new Intent(HomeActivity.this,
-                            Search_Studyboard.class);
-                    startActivity(i);
-                }
-            });
         }
 
     @Override

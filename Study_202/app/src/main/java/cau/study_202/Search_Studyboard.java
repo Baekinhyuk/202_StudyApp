@@ -1,14 +1,9 @@
 package cau.study_202;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -35,20 +30,5 @@ public class Search_Studyboard extends AppCompatActivity {
             }
         });
 
-    }
-
-    // 툴바 제어
-    void initialize_toolbar() {
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_board); // Attaching the layout to the toolbar object
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
-
-        /*
-        //뒤로가기 버튼 구현한거
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        final Drawable upArrow = getResources().getDrawable(R.drawable.icon_back);
-        getSupportActionBar().setHomeAsUpIndicator(upArrow);
-
-        tv_title.setText("스터디 구인 게시판");*/
     }
 }
