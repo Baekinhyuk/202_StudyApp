@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
+         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
@@ -29,13 +29,17 @@
             android:label="스터기 구인 게시판"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".member.MemberActivity"
+            android:name=".MemberActivity"
             android:label="스터디 멤버"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".GroupActivity"></activity>
+        <activity
+            android:name=".GroupActivity"
+            android:label="스터디 팀 전용 게시판"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
 
         <activity
             android:name=".BoardList"

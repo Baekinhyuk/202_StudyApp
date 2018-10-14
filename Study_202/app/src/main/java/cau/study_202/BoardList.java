@@ -1,6 +1,5 @@
 package cau.study_202;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.design.widget.NavigationView;
@@ -15,12 +14,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-
-import cau.study_202.member.MemberActivity;
 
 public class BoardList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
