@@ -97,16 +97,14 @@ public class HomeActivity  extends AppCompatActivity
             Intent i = new Intent(HomeActivity.this,
                     BoardList.class);
             startActivity(i);
-            finish();
-            // Handle the camera action
+
         } else if (id == R.id.nav_viewstudy) {
 
         } else if (id == R.id.nav_member) {
             Intent i = new Intent(HomeActivity.this,
                     GroupActivity.class);
             startActivity(i);
-            finish();
-        } else if (id == R.id.nav_attendence) {
+             } else if (id == R.id.nav_attendence) {
 
         } else if (id == R.id.drawer_menu_profile) {
 
