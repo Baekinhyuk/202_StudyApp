@@ -17,12 +17,16 @@ public class GroupPageAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        if (position == 0) {
-            return new MemberFragment(); // 첫화면 멤버들 보이는것
+        if (position == 0) {            // 멤버 게시판
+            return new MemberBoardFragment();
         } else if (position == 1) {
+            return new MemberFragment(); // 첫화면 멤버들 보이는것
+        } else if (position == 2) {
             return new CheckInFragment(); // 출석 화면
-        } else  {
+        } else if (position == 3) {
             return new MemberStatsFragment(); // 멤버들 통계 화면
+        } else {
+            return new MemberVoteFragment();
         }
 
     }
@@ -31,16 +35,20 @@ public class GroupPageAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if (position == 0) {
-            return mContext.getString(R.string.tab_member);
+            return mContext.getString(R.string.tab_board);
         } else if (position == 1) {
+            return mContext.getString(R.string.tab_member);
+        } else if (position == 2) {
             return mContext.getString(R.string.tab_check_in);
-        } else  {
+        } else if (position == 3){
             return mContext.getString(R.string.tab_member_stats);
+        } else {
+            return mContext.getString(R.string.tab_member_votes);
         }
     }
 
     @Override
     public int getCount() {
-        return 3; // 화면 3개
+        return 5; // 탭 5개
     }
 }

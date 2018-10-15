@@ -1,31 +1,11 @@
-package cau.study_202.member;
+package cau.study_202;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.view.LayoutInflater;
-import android.widget.ImageButton;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import java.util.ArrayList;
-
-
-import cau.study_202.R;
 
 public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
 

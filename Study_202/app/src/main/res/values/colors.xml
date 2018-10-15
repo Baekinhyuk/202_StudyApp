@@ -9,4 +9,8 @@
     <color name="Light_blue">#57c1ee</color>
     <color name="black">#000000</color>
 
+    <color name="before_present">#CCCCFF</color>
+    <color name="present">#008000</color>
+    <color name="late">#FFD400</color>
+    <color name="absent">#FF0000</color>
 </resources>

@@ -1,4 +1,4 @@
-package cau.study_202.member;
+package cau.study_202;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -13,13 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-
-import cau.study_202.R;
-import cau.study_202.Search_Studyboard;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -39,7 +34,6 @@ import java.io.OutputStream;
 
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class MemberActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -304,5 +298,6 @@ public class MemberActivity extends AppCompatActivity
         }
 
     }
+
 }
 
