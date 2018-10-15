@@ -21,12 +21,20 @@ public class Search_Studyboard extends AppCompatActivity {
         //Toolbar 적용하기 위해서 .HomeActivity Theme 제거(AndroidManifest에서)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_board);
         setSupportActionBar(toolbar);
-
-        Button button = (Button) findViewById(R.id.button2);
-        button.setOnClickListener(new View.OnClickListener() {
+        //돌아가기 눌렀을 경우
+        Button returnButton = (Button) findViewById(R.id.return_button);
+        returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+        //신청하기 눌렀을 경우
+        Button applyButton = (Button) findViewById(R.id.group_apply_button);
+        applyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
