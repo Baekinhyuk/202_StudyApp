@@ -113,7 +113,10 @@ public class MemberActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_delete) {
+            return true;
+        }
+        else if(id == R.id.action_modify){
             return true;
         }
 
@@ -126,24 +129,23 @@ public class MemberActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_searchstudy) {
+        if (id == R.id.nav_home) {
+            Intent i = new Intent(MemberActivity.this,
+                    HomeActivity.class);
+            startActivity(i);
+            finish();
+            // Handle the camera action
+        } else if (id == R.id.nav_searchstudy) {
             Intent i = new Intent(MemberActivity.this,
                     Search_Studyboard.class);
             startActivity(i);
             finish();
-            // Handle the camera action
+
         } else if (id == R.id.nav_viewstudy) {
 
-        } else if (id == R.id.nav_member) {
-
-        } else if (id == R.id.nav_attendence) {
-
-        } else if (id == R.id.drawer_menu_profile) {
-
-        } else if (id == R.id.drawer_menu_login) {
+        } else if (id == R.id.nav_inform) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_member);
         drawer.closeDrawer(GravityCompat.START);
         return true;

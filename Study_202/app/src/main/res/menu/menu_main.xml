@@ -7,6 +7,10 @@
         android:id="@+id/grp_1"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_nav_drawer_home"
+            android:title="홈 화면" />
+        <item
             android:id="@+id/nav_searchstudy"
             android:icon="@drawable/ic_nav_drawer_home"
             android:title="스터디 모집" />
@@ -15,22 +19,8 @@
             android:icon="@drawable/ic_nav_drawer_home"
             android:title="내 스터디" />
         <item
-            android:id="@+id/nav_member"
+            android:id="@+id/nav_inform"
             android:icon="@drawable/ic_nav_drawer_home"
-            android:title="스터디 멤버" />
-        <item
-            android:id="@+id/nav_attendence"
-            android:icon="@drawable/ic_nav_drawer_home"
-            android:title="출석체크" />
-        <item
-            android:id="@+id/drawer_menu_profile"
-            android:icon="@drawable/ic_nav_drawer_home"
-            android:title="오오오오오" />
-        <item
-            android:id="@+id/drawer_menu_login"
-            android:icon="@drawable/ic_nav_drawer_home"
-            android:title="유유유유유" />
+            android:title="내 정보보기" />
     </group>
-
-
 </menu>

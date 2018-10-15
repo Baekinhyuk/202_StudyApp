@@ -35,12 +35,6 @@
         </android.support.v7.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.03"
-        android:background="#bababa"/>
-
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -77,7 +71,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -86,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="인증시간" />
+                    android:text="인증시간"
+                    android:textAppearance="@android:style/TextAppearance.Material" />
 
                 <EditText
                     android:id="@+id/timetext"
@@ -104,7 +99,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="지각" />
+                    android:text="지각"
+                    android:textAppearance="@android:style/TextAppearance.Material" />
 
                 <EditText
                     android:id="@+id/editText3"
@@ -113,7 +109,7 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="30"
+                    android:hint="09:30"
                     android:inputType="time" />
             </LinearLayout>
 
@@ -133,7 +129,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="지각 벌금" />
+                    android:text="지각 벌금"
+                    android:textAppearance="@android:style/TextAppearance.Material" />
 
                 <EditText
                     android:id="@+id/ratefine"
@@ -148,7 +145,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="결석 벌금" />
+                    android:text="결석 벌금"
+                    android:textAppearance="@android:style/TextAppearance.Material" />
 
                 <EditText
                     android:id="@+id/absentfine"
