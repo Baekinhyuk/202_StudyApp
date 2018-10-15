@@ -11,6 +11,7 @@ import java.net.URL;
 import android.util.Log;
 
 public class Phprequest {
+    public static final String BASE_URL = "http://54.180.65.106/";
     private URL url;
 
     public Phprequest(String url) throws MalformedURLException { this.url = new URL(url); }
