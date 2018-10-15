@@ -124,7 +124,7 @@ public class Studyrequest extends AppCompatActivity {
                             editContent.getText().toString(), editPresentTime.getText().toString()
                             , editLateTime.getText().toString(), editLateFine.getText().toString(),
                             editAbsentFine.getText().toString());
-                    Phprequest.postData = result;
+                    Phprequest.pd = result;
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -189,7 +189,7 @@ public class Studyrequest extends AppCompatActivity {
 
                 OutputStream outputStream = conn.getOutputStream();
 
-                outputStream.write(Phprequest.postData.getBytes("utf-8"));
+                outputStream.write(Phprequest.pd.getBytes("utf-8"));
                 outputStream.flush();
                 outputStream.close();
                 String result = readStream(conn.getInputStream());

@@ -18,7 +18,7 @@ import cau.study_202.MemberActivity;
 
 public class Phprequest {
     public static final String BASE_URL = "http://54.180.65.106/";
-    public static String postData;
+    public static String pd;
     private URL url;
 
     public Phprequest(String url) throws MalformedURLException { this.url = new URL(url); }
@@ -48,17 +48,29 @@ public class Phprequest {
 
 
 
+
     public String createStudy(final String TITLE, final String CONTENT, final String ATTENDENCETIME, final String ATTENDENCELATE, final String LATEFINE, final String ABSENTFINE) {
 
 
-            String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "ATTENDENCETIME=" + ATTENDENCETIME
-                    + "&" + "ATTENDENCELATE=" + ATTENDENCELATE+ "&" + "LATEFINE=" + LATEFINE+ "&"
-                    + "ABSENTFINE=" + ABSENTFINE + "&" + "LEADERID=" + LoginStatus.getMemberID();
-            Log.i("PHPRequset", postData);
+        String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "ATTENDENCETIME=" + ATTENDENCETIME
+                + "&" + "ATTENDENCELATE=" + ATTENDENCELATE + "&" + "LATEFINE=" + LATEFINE + "&"
+                + "ABSENTFINE=" + ABSENTFINE + "&" + "LEADERID=" + LoginStatus.getMemberID();
+        Log.i("PHPRequset", postData);
 
-            return postData;
-            //return accept(postData);
+        return postData;
+        //return accept(postData);
+    }
 
+
+    public String login(final String ID, final String PASSWORD){
+        try {
+            String postData = "ID=" + ID + "&" + "PASSWORD=" + PASSWORD;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
 
     }
 
@@ -70,9 +82,11 @@ public class Phprequest {
             conn.setConnectTimeout(5000);
             conn.setDoOutput(true);
             conn.setDoInput(true);
-            Log.i("PHPRequest", "setDoinput밑");
+
             OutputStream outputStream = conn.getOutputStream();
-            Log.i("PHPRequest", "outputstream밑");
+
+
+
             outputStream.write(postData.getBytes("utf-8"));
             outputStream.flush();
             outputStream.close();
