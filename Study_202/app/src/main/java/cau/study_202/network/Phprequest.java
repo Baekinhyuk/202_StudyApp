@@ -18,7 +18,7 @@ public class Phprequest {
 
     private String readStream(InputStream in) throws IOException {
         StringBuilder jsonHtml = new StringBuilder();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "euc-kr"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
         String line = null;
 
         while((line = reader.readLine()) != null)
@@ -31,6 +31,27 @@ public class Phprequest {
     public String registmember(final String ID, final String PASSWORD,final String NAME,final String NICKNAME,final String EMAIL,final String PHONE,final String BIRTHDAY) {
         try {
             String postData = "ID=" + ID + "&" + "PASSWORD=" + PASSWORD + "&" + "NAME=" + NAME+ "&" + "NICKNAME=" + NICKNAME+ "&" + "EMAIL=" + EMAIL+ "&" + "PHONE=" + PHONE+ "&" + "BIRTHDAY=" + BIRTHDAY;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
+    }
+
+    public String login(final String ID, final String PASSWORD){
+        try {
+            String postData = "ID=" + ID + "&" + "PASSWORD=" + PASSWORD;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
+    }
+
+    private String accept(final String postData){
+        try {
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
             conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             conn.setRequestMethod("POST");
@@ -38,7 +59,7 @@ public class Phprequest {
             conn.setDoOutput(true);
             conn.setDoInput(true);
             OutputStream outputStream = conn.getOutputStream();
-            outputStream.write(postData.getBytes("euc-kr"));
+            outputStream.write(postData.getBytes("utf-8"));
             outputStream.flush();
             outputStream.close();
             String result = readStream(conn.getInputStream());
@@ -50,4 +71,5 @@ public class Phprequest {
             return null;
         }
     }
+
 }
