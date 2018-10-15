@@ -3,8 +3,6 @@ package cau.study_202;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -12,19 +10,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ImageButton;
-import android.databinding.DataBindingUtil;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import cau.study_202.member.MemberActivity;
 
 public class HomeActivity  extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -107,16 +97,14 @@ public class HomeActivity  extends AppCompatActivity
             Intent i = new Intent(HomeActivity.this,
                     BoardList.class);
             startActivity(i);
-            finish();
-            // Handle the camera action
+
         } else if (id == R.id.nav_viewstudy) {
 
         } else if (id == R.id.nav_member) {
             Intent i = new Intent(HomeActivity.this,
                     GroupActivity.class);
             startActivity(i);
-            finish();
-        } else if (id == R.id.nav_attendence) {
+             } else if (id == R.id.nav_attendence) {
 
         } else if (id == R.id.drawer_menu_profile) {
 

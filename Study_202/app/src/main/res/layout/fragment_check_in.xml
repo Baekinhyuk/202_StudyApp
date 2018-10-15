@@ -5,10 +5,49 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-<Button
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="출석하기"
-    android:textSize="64dp"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/check_to_photo"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:background="@mipmap/photo"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/check_to_bluetooth"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:background="@mipmap/bluetooth"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/check_to_gps"
+            android:layout_width="108dp"
+            android:layout_height="108dp"
+            android:background="@mipmap/gps"
+            />
+    </LinearLayout>
 
 </LinearLayout>

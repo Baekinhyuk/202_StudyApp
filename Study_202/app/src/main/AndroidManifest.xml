@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cau.study_202">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,30 +11,36 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"
+         <activity
+            android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="!!홈!!홈!!홈!!홈!!" />
+            android:label="!!홈!!홈!!홈!!홈!!"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Search_Studyboard"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="스터기 구인 게시판"/>
+            android:label="스터기 구인 게시판"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".member.MemberActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="스터디 멤버"/>
+            android:name=".MemberActivity"
+            android:label="스터디 멤버"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegistActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".GroupActivity"
+            android:label="스터디 팀 전용 게시판"
+            android:theme="@style/AppTheme.NoActionBar"
+            ></activity>
+
         <activity
             android:name=".BoardList"
             android:theme="@style/AppTheme.NoActionBar"
@@ -44,8 +50,7 @@
             android:name=".Studyrequest"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="스터기 구인 게시판"/>
-        <activity
-            android:name=".GroupActivity"/>
+
     </application>
 
 </manifest>
