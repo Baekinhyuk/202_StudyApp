@@ -19,7 +19,7 @@ public class Intro extends AppCompatActivity{
                 startActivity(i);
                 finish();
             }
-        },3000);
+        },1000);
     }
     protected void onPause(){
         super.onPause();

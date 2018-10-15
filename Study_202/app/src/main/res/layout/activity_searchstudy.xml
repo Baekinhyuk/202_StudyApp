@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme">
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_board"
             android:layout_width="match_parent"
@@ -17,22 +18,23 @@
             android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme" >
 
-            <FrameLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="40dp"
+                    android:layout_centerInParent="true"
                     android:text="스터디 구인 게시판"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
-            </FrameLayout>
+            </RelativeLayout>
         </android.support.v7.widget.Toolbar>
+
     </android.support.design.widget.AppBarLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,6 +47,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
+
         </LinearLayout>
 
         <LinearLayout
@@ -61,7 +64,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1.48"
                 android:background="@null"
-                android:hint="※제목을 적어주세요."
+                android:text="※제목을 적어주세요."
                 android:gravity="center_vertical"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium.Inverse" />
 
@@ -74,44 +77,40 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/certifytime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="인증시간" />
 
                 <TextView
-                    android:id="@+id/timetext"
+                    android:id="@+id/fixedtime"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="※시작 시간"
-                    android:inputType="time"/>
+                    android:text="09:00" />
 
                 <TextView
-                    android:id="@+id/ratetime"
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="지각" />
 
                 <TextView
-                    android:id="@+id/editText3"
+                    android:id="@+id/latetime"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="center"
-                    android:hint="※지각시간"
-                    android:inputType="time" />
+                    android:text="30" />
             </LinearLayout>
 
             <View
@@ -120,33 +119,42 @@
                 android:layout_weight="0.03"
                 android:background="#bababa" />
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
                 android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/gpscertify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
                     android:layout_weight="1"
-                    android:text="GPS인증" />
+                    android:text="지각 벌금"
+                    />
 
-                <RadioButton
-                    android:id="@+id/beaconcertify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/ratefine"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
                     android:layout_weight="1"
-                    android:text="비콘인증" />
+                    android:text="1000"/>
 
-                <RadioButton
-                    android:id="@+id/imagecertify"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <TextView
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
                     android:layout_weight="1"
-                    android:text="사진 인증" />
-            </RadioGroup>
+                    android:text="결석 벌금"/>
 
+                <TextView
+                    android:id="@+id/absentfine"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:layout_weight="1"
+                    android:text="3000"/>
+
+            </LinearLayout>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0dp"

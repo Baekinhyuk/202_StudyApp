@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="40dp"
-                    android:text="스터디 그룹"
+                    android:text="스터디 모집"
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
