@@ -60,7 +60,7 @@ public class RegistActivity extends AppCompatActivity {
     private boolean isNick = false;
 
     //IP 주소
-    private static String IP_ADDRESS = "192.168.0.7";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +200,7 @@ public class RegistActivity extends AppCompatActivity {
                 }*/
 
                 try {
-                    Phprequest request = new Phprequest("http://" + IP_ADDRESS +"/member_regist.php");
+                    Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_regist.php");
                     String result = request.registmember(String.valueOf(editID.getText()),String.valueOf(editPassword.getText()),String.valueOf(editName.getText()),String.valueOf(editNickname.getText()),String.valueOf(editEmail.getText()),String.valueOf(editPhone.getText()),String.valueOf(editBirth.getText()));
                     if(result.equals("1")){
                         Toast.makeText(getApplication(),"정상적으로 가입되었습니다.",Toast.LENGTH_SHORT).show();
