@@ -7,7 +7,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 
-public class Studyrequest extends AppCompatActivity {
+public class Studyrequest extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,4 +28,5 @@ public class Studyrequest extends AppCompatActivity {
             }
         });
     }
+
 }
