@@ -54,10 +54,12 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplication(),"존재하지 않는 아이디 입니다.",Toast.LENGTH_SHORT).show();
                     }
                     else {
-                        LoginStatus logindata = new LoginStatus();
+                        /* 여기도 php 통신해서 nickname, groupid 가져와서 Loginstatus에 저장해야함*/
+                        LoginStatus.setMemberID(String.valueOf(editID.getText()));
                         Intent i = new Intent(MainActivity.this,
                                 HomeActivity.class);
                         startActivity(i);
+                        finish();
                     }
                 }catch (MalformedURLException e){
                     e.printStackTrace();
