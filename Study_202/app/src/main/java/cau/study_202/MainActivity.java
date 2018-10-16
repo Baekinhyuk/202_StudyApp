@@ -56,6 +56,13 @@ public class MainActivity extends AppCompatActivity {
                     else {
                         /* 여기도 php 통신해서 nickname, groupid 가져와서 Loginstatus에 저장해야함*/
                         LoginStatus.setMemberID(String.valueOf(editID.getText()));
+                        try{
+                            LoginStatus.setGroupID(Integer.parseInt(result));
+                        }catch (IllegalArgumentException e) {
+                            LoginStatus.setGroupID(-1);
+                        }
+                        /*groupID 제대로 찍히는지 test*/
+                        //Toast.makeText(getApplication(),String.valueOf(LoginStatus.getGroupID()),Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(MainActivity.this,
                                 HomeActivity.class);
                         startActivity(i);

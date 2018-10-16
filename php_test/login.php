@@ -14,7 +14,17 @@ $row = mysqli_num_rows($result);
     $result2 = mysqli_query($conn, $query2);
     $row2 = mysqli_num_rows($result2);
              if($row2 ==1){
-		echo "2";}
+		$query3 = "select member.groupID from study202.member where member.ID = '$id'";
+		$result3 = mysqli_query($conn, $query3);
+		$row_num = mysqli_num_rows($result3);	
+		if($row_num ==0){
+			echo "-1";
+		}
+		else{		
+			$row3 = mysqli_fetch_array($result3);
+			echo "$row3[groupID]";
+		}
+		}
 	else{	
 		echo "1";}
     }
