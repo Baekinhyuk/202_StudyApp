@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
 import cau.study_202.network.Phprequest;
 
 public class Studyrequest extends AppCompatActivity {
+
+    private String pd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,17 +120,15 @@ public class Studyrequest extends AppCompatActivity {
                     return;
                 }
 
-                try {
-                    Phprequest request = new Phprequest(Phprequest.BASE_URL + "create_study.php");
-                    String result = request.createStudy(editTitle.getText().toString(),
+
+
+                    String result = Phprequest.createStudy(editTitle.getText().toString(),
                             editContent.getText().toString(), editPresentTime.getText().toString()
                             , editLateTime.getText().toString(), editLateFine.getText().toString(),
                             editAbsentFine.getText().toString());
-                    Phprequest.pd = result;
+                    pd = result;
 
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+
 
 
                 GetData task = new GetData();
@@ -189,7 +189,7 @@ public class Studyrequest extends AppCompatActivity {
 
                 OutputStream outputStream = conn.getOutputStream();
 
-                outputStream.write(Phprequest.pd.getBytes("utf-8"));
+                outputStream.write(pd.getBytes("utf-8"));
                 outputStream.flush();
                 outputStream.close();
                 String result = readStream(conn.getInputStream());
