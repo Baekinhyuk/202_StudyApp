@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -40,6 +41,32 @@ public class HomeActivity  extends AppCompatActivity
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
 
+            Button mystudy=(Button) findViewById(R.id.mystudy);
+            mystudy.setOnClickListener(new Button.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(HomeActivity.this,
+                            GroupActivity.class);
+                    startActivity(i);
+                }
+            });
+            Button button4=(Button) findViewById(R.id.button4);
+            button4.setOnClickListener(new Button.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(HomeActivity.this,BoardList.class);
+                    startActivity(i);
+                }
+            });
+            Button privacy=(Button) findViewById(R.id.privacy);
+            privacy.setOnClickListener(new Button.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(HomeActivity.this,BoardList.class);
+                    startActivity(i);
+                }
+            });
+
         }
 
     @Override
@@ -52,7 +79,7 @@ public class HomeActivity  extends AppCompatActivity
         }
     }
 
-    @Override
+  /*  @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_right, menu);
@@ -67,12 +94,15 @@ public class HomeActivity  extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_delete) {
+            return true;
+        }
+        else if(id == R.id.action_modify){
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -80,22 +110,21 @@ public class HomeActivity  extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_searchstudy) {
+        if (id == R.id.nav_home) {
+            Intent i = new Intent(HomeActivity.this,
+                    HomeActivity.class);
+            startActivity(i);
+
+        } else if (id == R.id.nav_searchstudy) {
             Intent i = new Intent(HomeActivity.this,
                     BoardList.class);
             startActivity(i);
 
         } else if (id == R.id.nav_viewstudy) {
-
-        } else if (id == R.id.nav_member) {
             Intent i = new Intent(HomeActivity.this,
                     GroupActivity.class);
             startActivity(i);
-             } else if (id == R.id.nav_attendence) {
-
-        } else if (id == R.id.drawer_menu_profile) {
-
-        } else if (id == R.id.drawer_menu_login) {
+        } else if (id == R.id.nav_inform) {
 
         }
 
