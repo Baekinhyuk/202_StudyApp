@@ -6,25 +6,34 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageButton
+    <ImageView
         android:id="@+id/btn_board_write"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginRight="15dp"
-        android:background="@android:color/transparent"
+
         android:layout_gravity="right"
-        android:scaleType="centerInside"
-        android:src="@drawable/write" />
+        android:scaleType="centerCrop"
+        android:src="@mipmap/wirte" />
 
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/board_list"
-        android:orientation="vertical"
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
+        android:layout_height="match_parent">
 
-        />
+        <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/board_list"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="4dp"
+            android:paddingRight="4dp"
+
+            />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 
 
 </LinearLayout>

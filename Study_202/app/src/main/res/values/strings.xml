@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">출석스터디</string>
+    <string name="app_name">study202</string>
     <string name="login">로그인</string>
     <string name="regist">회원가입</string>
     <string name="loginEmail">이메일를 입력해주세요</string>

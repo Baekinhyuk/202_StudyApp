@@ -60,6 +60,21 @@ public class Phprequest {
         //return accept(postData);
     }
 
+    public static String createBoard(final String TITLE, final String CONTENT) {
+        String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "GROUPID=" + LoginStatus.getGroupID()
+                + "&" + "MEMBERID=" + LoginStatus.getMemberID();
+        Log.i("PHPRequest", postData);
+
+        return postData;
+    }
+
+    public static String modifyBoard(final String TITLE, final String CONTENT, final String ID) {
+        String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "ID=" + ID;
+        Log.i("PHPRequest", postData);
+
+        return postData;
+    }
+
 
     public String login(final String ID, final String PASSWORD){
         try {

@@ -51,6 +51,11 @@ public class Studyrequest extends AppCompatActivity {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(LoginStatus.getGroupID() != -1) {
+                    Toast.makeText(Studyrequest.this, "이미 가입된 그룹이 있습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                    return;
+                }
 
                 EditText editTitle = (EditText) findViewById(R.id.input_title);
                 // 제목 입력 확인

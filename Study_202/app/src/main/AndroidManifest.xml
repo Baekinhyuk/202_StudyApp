@@ -12,18 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".Intro">
-
+        <activity
+            android:name=".Intro"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".HomeActivity"
             android:label="!!홈!!홈!!홈!!홈!!"
@@ -42,19 +42,23 @@
         <activity
             android:name=".GroupActivity"
             android:label="스터디 팀 전용 게시판"
-            android:theme="@style/AppTheme.NoActionBar"
-            ></activity>
-
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".BoardList"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="스터기 구인 게시판"/>
-
+            android:label="스터기 구인 게시판"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Studyrequest"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="스터기 구인 게시판"/>
-
+            android:label="스터기 구인 게시판"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChanBoardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ChanShowBoardActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChanModifyBoardActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

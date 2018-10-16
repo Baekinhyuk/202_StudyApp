@@ -16,6 +16,8 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class HomeActivity  extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -41,7 +43,7 @@ public class HomeActivity  extends AppCompatActivity
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
 
-            Button mystudy=(Button) findViewById(R.id.mystudy);
+            ImageView mystudy=(ImageView) findViewById(R.id.mystudy);
             mystudy.setOnClickListener(new Button.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -50,22 +52,24 @@ public class HomeActivity  extends AppCompatActivity
                     startActivity(i);
                 }
             });
-            Button button4=(Button) findViewById(R.id.button4);
+            /*Button button4=(Button) findViewById(R.id.button4);
             button4.setOnClickListener(new Button.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(HomeActivity.this,BoardList.class);
                     startActivity(i);
                 }
-            });
-            Button privacy=(Button) findViewById(R.id.privacy);
-            privacy.setOnClickListener(new Button.OnClickListener(){
+            });*/
+            ImageView joinGroup=(ImageView) findViewById(R.id.join_group);
+            joinGroup.setOnClickListener(new Button.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(HomeActivity.this,BoardList.class);
                     startActivity(i);
                 }
             });
+
+
 
         }
 
@@ -114,6 +118,7 @@ public class HomeActivity  extends AppCompatActivity
             Intent i = new Intent(HomeActivity.this,
                     HomeActivity.class);
             startActivity(i);
+            finish();
 
         } else if (id == R.id.nav_searchstudy) {
             Intent i = new Intent(HomeActivity.this,
@@ -124,8 +129,6 @@ public class HomeActivity  extends AppCompatActivity
             Intent i = new Intent(HomeActivity.this,
                     GroupActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_inform) {
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -133,20 +136,5 @@ public class HomeActivity  extends AppCompatActivity
         return true;
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.bottom_nav_home:
-                    return true;
-                case R.id.bottom_nav_room_list:
-                    return true;
-                case R.id.bottom_nav_reserved_list:
-                    return true;
-            }
-            return false;
-        }
-    };
 }
