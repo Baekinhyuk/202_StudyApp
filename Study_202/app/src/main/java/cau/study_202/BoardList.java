@@ -18,6 +18,8 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.security.acl.Group;
+
 public class BoardList extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
@@ -83,7 +85,7 @@ public class BoardList extends AppCompatActivity
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_right, menu);
@@ -98,36 +100,40 @@ public class BoardList extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_delete) {
+            return true;
+        }
+        else if(id == R.id.action_modify){
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_searchstudy) {
+        if (id == R.id.nav_home) {
+            Intent i = new Intent(BoardList.this,
+                    HomeActivity.class);
+            startActivity(i);
+            finish();
+
+        } else if (id == R.id.nav_searchstudy) {
             Intent i = new Intent(BoardList.this,
                     BoardList.class);
             startActivity(i);
             finish();
-            // Handle the camera action
+
         } else if (id == R.id.nav_viewstudy) {
-
-        } else if (id == R.id.nav_member) {
             Intent i = new Intent(BoardList.this,
-                    MemberActivity.class);
+                    GroupActivity.class);
             startActivity(i);
-        } else if (id == R.id.nav_attendence) {
-
-        } else if (id == R.id.drawer_menu_profile) {
-
-        } else if (id == R.id.drawer_menu_login) {
+            finish();
+        } else if (id == R.id.nav_inform) {
 
         }
 
