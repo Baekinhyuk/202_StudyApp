@@ -2,6 +2,7 @@ package cau.study_202;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,6 +17,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -34,7 +36,14 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -60,7 +69,7 @@ public class RegistActivity extends AppCompatActivity {
     private boolean isNick = false;
 
     //IP 주소
-    private static String IP_ADDRESS = "192.168.0.7";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -200,7 +209,7 @@ public class RegistActivity extends AppCompatActivity {
                 }*/
 
                 try {
-                    Phprequest request = new Phprequest("http://" + IP_ADDRESS +"/member_regist.php");
+                    Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_regist.php");
                     String result = request.registmember(String.valueOf(editID.getText()),String.valueOf(editPassword.getText()),String.valueOf(editName.getText()),String.valueOf(editNickname.getText()),String.valueOf(editEmail.getText()),String.valueOf(editPhone.getText()),String.valueOf(editBirth.getText()));
                     if(result.equals("1")){
                         Toast.makeText(getApplication(),"정상적으로 가입되었습니다.",Toast.LENGTH_SHORT).show();
@@ -216,6 +225,8 @@ public class RegistActivity extends AppCompatActivity {
         });
 
     }
+
+
 
     public boolean checkEmailForm(String src){              //이메일 형식검사
         String emailRegex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";

@@ -26,9 +26,13 @@
                     android:id="@+id/tv_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+
                     android:layout_gravity="center"
                     android:gravity="center_vertical"
-                    android:text="스터디 구인 게시판"
+
+                    android:layout_centerInParent="true"
+                    android:text="스터디 모집 게시판"
+
                     android:textColor="@color/white"
                     android:textStyle="bold" />
 
@@ -85,11 +89,12 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="인증시간"
-                    android:textAppearance="@android:style/TextAppearance.Material" />
+                    android:textAppearance="@android:style/TextAppearance.Material"
+                    android:text="출석 시간" />
+
 
                 <TextView
-                    android:id="@+id/fixedtime"
+                    android:id="@+id/present_time"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -135,7 +140,7 @@
                     android:textAppearance="@android:style/TextAppearance.Material" />
 
                 <TextView
-                    android:id="@+id/ratefine"
+                    android:id="@+id/latefine"
                     android:layout_width="100dp"
                     android:layout_height="30dp"
                     android:gravity="center"
@@ -193,14 +198,14 @@
             android:layout_weight="1">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/group_apply_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="신청하기" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/return_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
