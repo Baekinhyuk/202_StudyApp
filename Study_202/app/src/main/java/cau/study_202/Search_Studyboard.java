@@ -25,7 +25,7 @@ import java.net.URL;
 
 import cau.study_202.network.Phprequest;
 
-
+// 게시판 신청하기
 public class Search_Studyboard extends AppCompatActivity {
 
     Intent intent;

@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 
 import cau.study_202.network.Phprequest;
 
+// 게시판 생성
 public class Studyrequest extends AppCompatActivity {
 
     private String pd;
@@ -162,8 +163,10 @@ public class Studyrequest extends AppCompatActivity {
             super.onPostExecute(result);
             progressDialog.dismiss();
 
-            if(result.equals("1")){
+            if(!result.equals("-1")){
                 Toast.makeText(getApplication(),"정상적으로 생성되었습니다.",Toast.LENGTH_SHORT).show();
+                LoginStatus.setGroupID(Integer.parseInt(result));
+                Log.i("loginstatus", LoginStatus.getGroupID()+"");
                 finish();
             }
             else{
