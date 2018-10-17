@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_board"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            app:popupTheme="@style/AppTheme">
+
+
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="40dp"
+                android:text="글수정"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+
+        </android.support.v7.widget.Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.03"
+        android:background="#bababa" />
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#e4e4e4"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"></LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="9"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:weightSum="10">
+
+            <EditText
+                android:id="@+id/board_edit_title"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.48"
+                android:background="@null"
+                android:hint="※제목을 적어주세요."
+                android:textColor="#bababa" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.03"
+                android:background="#bababa" />
+
+
+
+            <EditText
+                android:id="@+id/board_edit_contents"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="8.46"
+                android:background="@null"
+                android:hint="※내용을 적어주세요. \n\n1. 스터디의 구체적인 룰을 적어주세요. \n2. 욕설, 비방 등 법적 문제의 소지가 있는 경우 차단 및 신고, 처벌 받으실 수 있습니다."
+                android:inputType="textMultiLine"
+                android:lines="15"
+                android:maxLines="17"
+                android:minLines="13"
+                android:scrollbars="vertical"
+                android:textColor="#bababa" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.03"
+                android:background="#bababa" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary">
+
+            <Button
+                android:id="@+id/board_edit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="수정완료" />
+
+            <Button
+                android:id="@+id/board_return_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="돌아가기"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

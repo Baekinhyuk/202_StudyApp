@@ -145,30 +145,13 @@ public class MemberActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_viewstudy) {
 
-        } else if (id == R.id.nav_inform) {
-
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_member);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.bottom_nav_home:
-                    return true;
-                case R.id.bottom_nav_room_list:
-                    return true;
-                case R.id.bottom_nav_reserved_list:
-                    return true;
-            }
-            return false;
-        }
-    };
 
     private class GetData extends AsyncTask<String, Void, String>{
 

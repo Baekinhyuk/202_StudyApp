@@ -6,7 +6,8 @@ public class LoginStatus {
 
     private static String nickName;
 
-    private static int groupID;
+    private static int groupID = 12; // 임의로
+
 
     public static String getMemberID() {return memberID; }
 

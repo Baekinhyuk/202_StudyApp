@@ -18,9 +18,6 @@
             android:id="@+id/nav_viewstudy"
             android:icon="@drawable/ic_nav_drawer_home"
             android:title="내 스터디" />
-        <item
-            android:id="@+id/nav_inform"
-            android:icon="@drawable/ic_nav_drawer_home"
-            android:title="내 정보보기" />
+
     </group>
 </menu>

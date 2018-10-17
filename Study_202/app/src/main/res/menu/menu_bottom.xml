@@ -1,22 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/bottom_nav_home"
-        android:icon="@drawable/ic_bottom_nav_home"
-        android:title="홈??" />
+        android:id="@+id/action_delete"
+        android:orderInCategory="100"
+        android:title="삭제" />
 
-    <item
-        android:id="@+id/bottom_nav_room_list"
-        android:icon="@drawable/ic_bottom_nav_room_list"
-        android:title="몰라가져온거" />
-
-    <item
-        android:id="@+id/bottom_nav_reserved_list"
-        android:icon="@drawable/ic_bottom_nav_reserved_list"
-        android:title="이름이랑내용수정필요" />
-
-    <item
-        android:id="@+id/bottom_nav_message"
-        android:icon="@drawable/ic_bottom_nav_message"
-        android:title="어쨋든그렇다고" />
 </menu>

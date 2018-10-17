@@ -3,7 +3,6 @@ package cau.study_202;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -25,55 +24,25 @@ import java.net.URL;
 
 import cau.study_202.network.Phprequest;
 
-// 게시판 신청하기
-public class Search_Studyboard extends AppCompatActivity {
+public class ChanShowBoardActivity extends AppCompatActivity {
 
     Intent intent;
     String title ;
     String content;
     String author;
     int boardId;
-    String atime;
-    String ltime;
-    String lf;
-    String af;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_searchstudy);
+        setContentView(R.layout.activity_chan_show_board);
 
         intent = getIntent();
         title = intent.getStringExtra("title");
         content = intent.getStringExtra("content");
         author = intent.getStringExtra("author");
         boardId = intent.getIntExtra("id", -1);
-        atime = intent.getStringExtra("attendencetime");
-        ltime = intent.getStringExtra("attendencelatetime");
-        lf = intent.getStringExtra("latefine");
-        af = intent.getStringExtra("absencefine");
         Log.i("intent", "\ntitle:"+title+"\ncontent:"+content+"\nauthor:"+author+"\nboardid:"+boardId);
 
-        TextView titleTextView = findViewById(R.id.title);
-        titleTextView.setText(title);
-
-        TextView contentTextView =  findViewById(R.id.content);
-        contentTextView.setText(content);
-
-        TextView presentTextView = findViewById(R.id.present_time);
-        presentTextView.setText(atime);
-
-        TextView latetimeTextView = findViewById(R.id.latetime);
-        latetimeTextView.setText(ltime);
-
-        TextView latefineTextView = findViewById(R.id.latefine);
-        latefineTextView.setText(lf);
-
-        TextView absentfineTextView = findViewById(R.id.absentfine);
-        absentfineTextView.setText(af);
-
-
-        //화면회전 금지
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         //Toolbar 적용하기 위해서 .HomeActivity Theme 제거(AndroidManifest에서)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_board);
@@ -81,29 +50,31 @@ public class Search_Studyboard extends AppCompatActivity {
         if (!(LoginStatus.getMemberID().equals(author))) {
             toolbar.setVisibility(View.GONE);
         }
-        //돌아가기 눌렀을 경우
-        Button returnButton = (Button) findViewById(R.id.return_button);
+
+
+        TextView titleTextView = (TextView) findViewById(R.id.board_title);
+        titleTextView.setText(title);
+
+        TextView contentTextView = (TextView) findViewById(R.id.board_contents);
+        contentTextView.setText(content);
+
+        // 돌아가기 눌렀을때
+        Button returnButton = (Button) findViewById(R.id.board_return_button);
         returnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-        //신청하기 눌렀을 경우 (가입)
-        Button applyButton = (Button) findViewById(R.id.group_apply_button);
-        applyButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
+
 
     }
-
+    // 삭제 및 수정 구현해야함..
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_bottom, menu);
+        getMenuInflater().inflate(R.menu.menu_right, menu);
         return true;
     }
 
@@ -112,20 +83,23 @@ public class Search_Studyboard extends AppCompatActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-
         AlertDialog.Builder alertdialog = new AlertDialog.Builder(this);
+
+
+
 
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_delete) {
+
             alertdialog.setMessage("삭제하시겠습니까?");
             // 확인버튼
             alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener(){
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     DeleteBoardData task = new DeleteBoardData();
-                    task.execute( Phprequest.BASE_URL+"delete_gboard.php"+"?ID="+boardId,"");
+                    task.execute( Phprequest.BASE_URL+"delete_board.php"+"?ID="+boardId,"");
                     Toast.makeText(getApplicationContext(), "삭제 되었습니다.", Toast.LENGTH_SHORT).show();
 
 
@@ -143,9 +117,21 @@ public class Search_Studyboard extends AppCompatActivity {
             AlertDialog alert = alertdialog.create();
             alert.show();
             return true;
+        }
+        else if(id == R.id.action_modify){
+
+            Intent i = new Intent(ChanShowBoardActivity.this,
+                    ChanModifyBoardActivity.class);
+            i.putExtra("title", title);
+            i.putExtra("content", content);
+            i.putExtra("author", author);
+            i.putExtra("id", boardId);
+            startActivity(i);
+            finish();
+            return true;
+
 
         }
-
 
         return super.onOptionsItemSelected(item);
     }

@@ -18,7 +18,6 @@ import cau.study_202.MemberActivity;
 
 public class Phprequest {
     public static final String BASE_URL = "http://54.180.65.106/";
-    public static String pd;
     private URL url;
 
     public Phprequest(String url) throws MalformedURLException { this.url = new URL(url); }
@@ -49,7 +48,7 @@ public class Phprequest {
 
 
 
-    public String createStudy(final String TITLE, final String CONTENT, final String ATTENDENCETIME, final String ATTENDENCELATE, final String LATEFINE, final String ABSENTFINE) {
+    public static String createStudy(final String TITLE, final String CONTENT, final String ATTENDENCETIME, final String ATTENDENCELATE, final String LATEFINE, final String ABSENTFINE) {
 
 
         String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "ATTENDENCETIME=" + ATTENDENCETIME
@@ -59,6 +58,21 @@ public class Phprequest {
 
         return postData;
         //return accept(postData);
+    }
+
+    public static String createBoard(final String TITLE, final String CONTENT) {
+        String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "GROUPID=" + LoginStatus.getGroupID()
+                + "&" + "MEMBERID=" + LoginStatus.getMemberID();
+        Log.i("PHPRequest", postData);
+
+        return postData;
+    }
+
+    public static String modifyBoard(final String TITLE, final String CONTENT, final String ID) {
+        String postData = "TITLE=" + TITLE + "&" + "CONTENT=" + CONTENT + "&" + "ID=" + ID;
+        Log.i("PHPRequest", postData);
+
+        return postData;
     }
 
 
