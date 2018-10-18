@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf-8');
 $conn=mysqli_connect("localhost","root","a123s123","study202");
 
-$sql="select groupsearchboard.ID, TITLE, CONTENT, GROUPID, MEMBERID, ATTENDENCETIME, ATTENDENCELATETIME, LATEFINE, ABSENCEFINE from groupsearchboard left join study202.group on groupID = study202.group.id";
+$sql="select groupsearchboard.ID, TITLE, CONTENT, GROUPID, MEMBERID, ATTENDENCETIME, ATTENDENCELATETIME, LATEFINE, ABSENCEFINE from groupsearchboard left join study202.group on groupID = study202.group.id ORDER BY id DESC";
 
 if($result=mysqli_query($conn,$sql)){
 $row_num = mysqli_num_rows($result);

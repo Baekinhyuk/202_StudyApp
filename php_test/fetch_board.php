@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf-8');
 $conn=mysqli_connect("localhost","root","a123s123","study202");
 
-$sql="select * from study202.groupboard where groupID='".$_GET[GROUPID]."'";
+$sql="select * from study202.groupboard where groupID='".$_GET[GROUPID]."'"."ORDER BY id DESC";
 
 if($result=mysqli_query($conn,$sql)){
 $row_num = mysqli_num_rows($result);
