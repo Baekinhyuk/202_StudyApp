@@ -108,6 +108,7 @@ public class BoardList extends AppCompatActivity
                         intent.putExtra("attendencelatetime",currentBoard.getAttendencelatetime());
                         intent.putExtra("latefine",currentBoard.getLatefine());
                         intent.putExtra("absencefine",currentBoard.getAbsencefine());
+                        intent.putExtra("groupid",currentBoard.getGroupId());
                         startActivity(intent);
                     }
                 });

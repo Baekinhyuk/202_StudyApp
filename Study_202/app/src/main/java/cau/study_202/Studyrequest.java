@@ -166,6 +166,7 @@ public class Studyrequest extends AppCompatActivity {
             if(!result.equals("-1")){
                 Toast.makeText(getApplication(),"정상적으로 생성되었습니다.",Toast.LENGTH_SHORT).show();
                 LoginStatus.setGroupID(Integer.parseInt(result));
+                LoginStatus.setLeader();
                 Log.i("loginstatus", LoginStatus.getGroupID()+"");
                 finish();
             }
