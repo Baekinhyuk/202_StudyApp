@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                             LoginStatus.setGroupID(-1);
                         }
                         /*groupID 제대로 찍히는지 test*/
-                        //Toast.makeText(getApplication(),String.valueOf(LoginStatus.isLeader()),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplication(),LoginStatus.getGroupID()+String.valueOf(LoginStatus.isLeader()),Toast.LENGTH_SHORT).show();
                         Intent i = new Intent(MainActivity.this,
                                 HomeActivity.class);
                         startActivity(i);
@@ -112,3 +112,4 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
