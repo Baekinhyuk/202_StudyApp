@@ -2,7 +2,7 @@
 header('Content-Type: text/html; charset=utf-8');
 $conn=mysqli_connect("localhost","root","a123s123","study202");
 
-$sql="select memberID, TRUST from study202.waitgroupregist left join study202.member on memberID = study202.ID where groupID='".$_GET[GROUPID]."'";
+$sql="select memberID, TRUST from study202.waitgroupregist left join study202.member on memberID = study202.member.ID where study202.waitgroupregist.groupID=".$_GET[GROUPID];
 
 if($result=mysqli_query($conn,$sql)){
 $row_num = mysqli_num_rows($result);

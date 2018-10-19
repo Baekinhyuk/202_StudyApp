@@ -42,7 +42,7 @@ public class ChanWaitingAdapter extends ArrayAdapter<Member> {
         // 신뢰도
         TextView trustTextView = (TextView) listItemView.findViewById(R.id.trust);
 
-        trustTextView.setText("신뢰도: " +currentMember.getTrust());
+        trustTextView.setText("신뢰도 : " +currentMember.getTrust());
 
         // 선택 이미지
         ImageView leaderImageView = (ImageView) listItemView.findViewById(R.id.accept);
