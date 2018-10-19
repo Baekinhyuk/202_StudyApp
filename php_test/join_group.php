@@ -7,13 +7,13 @@ $_POST['ID']
 $_POST['GROUPID']
 */
 
-$query = "update study202.member set groupID='".$_POST['GROUPID']."' where id='".$_POST['ID']."'"; 
+$query = "insert into study202.waitgroupregist (groupID, memberID) VALUES (".$_POST['GROUPID'].", '".$_POST['ID']."')";
 $result = mysqli_query($conn, $query);
-     
-if($result){	
-	
+
+if($result){
+
 		echo "1";
-	
+
 }else{
     echo $query;
      }

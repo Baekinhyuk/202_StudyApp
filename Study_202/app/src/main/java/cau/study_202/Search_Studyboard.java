@@ -1,5 +1,6 @@
 package cau.study_202;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -40,6 +41,7 @@ public class Search_Studyboard extends AppCompatActivity {
     String lf;
     String af;
     int groupid;
+    private Activity activity = this;
 
     String pd;
     @Override
@@ -101,18 +103,35 @@ public class Search_Studyboard extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                AlertDialog.Builder alertdialog = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder alertdialog = new AlertDialog.Builder(activity);
 
-                if (LoginStatus.getGroupID() != -1) {
-                    Toast.makeText(Search_Studyboard.this, "이미 가입된 스터디가 있습니다.", Toast.LENGTH_SHORT).show();
-                    return;
-                } else {
+                alertdialog.setMessage("가입신청하시겠습니까?");
+                // 확인버튼
+                alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (LoginStatus.getGroupID() != -1) {
+                            Toast.makeText(Search_Studyboard.this, "이미 가입된 스터디가 있습니다.", Toast.LENGTH_SHORT).show();
+                            return;
+                        } else {
 
-                    pd = "ID="+LoginStatus.getMemberID()+"&" + "GROUPID=" + groupid;
-                    GroupJoin task = new GroupJoin();
-                    task.execute(Phprequest.BASE_URL+"join_group.php");
+                            pd = "ID="+LoginStatus.getMemberID()+"&" + "GROUPID=" + groupid;
+                            GroupJoin task = new GroupJoin();
+                            task.execute(Phprequest.BASE_URL+"join_group.php");
 
-                }
+                        }
+                    }
+                });
+                // 취소버튼
+                alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+                // 메인 다이얼로그 생성
+                AlertDialog alert = alertdialog.create();
+                alert.show();
+
 
             }
         });
@@ -252,8 +271,8 @@ public class Search_Studyboard extends AppCompatActivity {
             super.onPostExecute(result);
             Log.i("뭔데", result);
             if(result.equals("1")){
-                Toast.makeText(getApplication(),"정상적으로 가입되었습니다.",Toast.LENGTH_SHORT).show();
-                LoginStatus.setGroupID(groupid);
+                Toast.makeText(getApplication(),"정상적으로 가입신청되었습니다.",Toast.LENGTH_SHORT).show();
+
             }
             else{
                 Toast.makeText(getApplication(),"가입과정에 문제가 발생했습니다.",Toast.LENGTH_SHORT).show();

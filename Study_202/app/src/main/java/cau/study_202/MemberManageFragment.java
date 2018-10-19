@@ -93,7 +93,7 @@ public class MemberManageFragment extends Fragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        /* 가입 수락 하시겠습니까? dialog
+                        /* 가입 수락 하시겠습니까? dialog // leader인 경우에만 dialog 띄우기
                         Intent intent = new Intent(getActivity(), ChanShowBoardActivity.class); // intent 되는 activty에 알맞은 data 출력
                         Board currentBoard = boards.get(position);
                         intent.putExtra("title", currentBoard.getTitle());
