@@ -13,6 +13,10 @@
         android:layout_marginTop="8dp"
         android:background="#bababa" />
 
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swiperefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -111,6 +115,8 @@
         android:text="가입 대기자"
         android:textAppearance="@android:style/TextAppearance.Material"/>
 
+
+
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/watinglist"
         android:orientation="vertical"
@@ -129,5 +135,6 @@
         android:padding="16dp"
         android:text="@string/leave"
         android:textAppearance="@android:style/TextAppearance.Material"/>
+
 
 </LinearLayout>

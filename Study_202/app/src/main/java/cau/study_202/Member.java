@@ -24,6 +24,11 @@ public class Member {
         this.birthday = birthday;
 
     }
+
+    public Member(String userId, double trust){
+        this.userId = userId;
+        this.trust = trust;
+    }
     public  Member(){}
 
     public String getUserId() {
