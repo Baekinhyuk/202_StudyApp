@@ -34,9 +34,9 @@ public class Phprequest {
         return jsonHtml.toString();
     }
 
-    public String registmember(final String ID, final String PASSWORD,final String NAME,final String NICKNAME,final String EMAIL,final String PHONE,final String BIRTHDAY) {
+    public String registmember(final String ID, final String PASSWORD,final String NAME,final String EMAIL,final String PHONE,final String BIRTHDAY) {
         try {
-            String postData = "ID=" + ID + "&" + "PASSWORD=" + PASSWORD + "&" + "NAME=" + NAME+ "&" + "NICKNAME=" + NICKNAME+ "&" + "EMAIL=" + EMAIL+ "&" + "PHONE=" + PHONE+ "&" + "BIRTHDAY=" + BIRTHDAY;
+            String postData = "ID=" + ID + "&" + "PASSWORD=" + PASSWORD + "&" + "NAME=" + NAME+"&" + "EMAIL=" + EMAIL+ "&" + "PHONE=" + PHONE+ "&" + "BIRTHDAY=" + BIRTHDAY;
             return accept(postData);
         }
         catch (Exception e) {
@@ -86,6 +86,28 @@ public class Phprequest {
             return null;
         }
 
+    }
+
+    public String memberoutput(final String groupID){
+        try {
+            String postData = "groupID=" + groupID;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
+    }
+
+    public String sameIDcheck(final String ID){
+        try {
+            String postData = "ID=" + ID;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
     }
 
     private String accept(final String postData){

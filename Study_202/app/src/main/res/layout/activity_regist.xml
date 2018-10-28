@@ -156,37 +156,6 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/join_nickname"
-                android:layout_gravity="center"
-                android:layout_marginLeft="37dp"
-                android:layout_marginRight="8dp"/>
-
-            <EditText
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/editNickname"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="닉네임"
-                android:backgroundTint="#bfe2f8"
-                android:textSize="15dp"/>
-
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/join_check"
-                android:id="@+id/btnNicknameCheck" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:background="@mipmap/telephone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="37dp"

@@ -4,12 +4,9 @@ public class LoginStatus {
 
     private static String memberID;
 
-    private static String nickName;
-
     private static int groupID = -1; // 임의로
 
     private static boolean isLeader = false;
-
 
     public static String getMemberID() {return memberID; }
 
@@ -22,9 +19,5 @@ public class LoginStatus {
     public static boolean isLeader() {return isLeader;}
 
     public static void setLeader() {isLeader = true;}
-
-    public static String getNickName() {return nickName;}
-
-    public static void setNickName(String nickname) {nickName = nickname;}
 
 }
