@@ -62,6 +62,7 @@ public class RegistActivity extends AppCompatActivity {
     private RadioGroup RbtnGroup; // 성별 라디오 버튼 그룹
     private ImageButton btnDone, btnCancel; // 가입, 취소 버튼
     private boolean IDcheck = false;
+    private String CheckID = "";
 
     // datePicker 사용
     private SimpleDateFormat dateFormatter;
@@ -153,6 +154,8 @@ public class RegistActivity extends AppCompatActivity {
                     if(Integer.parseInt(result)==0){
                         Toast.makeText(getApplication(),"사용가능한 ID입니다",Toast.LENGTH_SHORT).show();
                         IDcheck = true;
+                        //체크했을 당시에 아이디를 임시로 저장
+                        CheckID = String.valueOf(editID.getText());
                     }
                     if(Integer.parseInt(result)==1){
                         Toast.makeText(getApplication(),"사용불가능한 ID입니다",Toast.LENGTH_SHORT).show();
@@ -234,7 +237,12 @@ public class RegistActivity extends AppCompatActivity {
                     editNickname.requestFocus();
                     return;
                 }*/
-
+                //가입버튼을 눌렀을 시 현재 입력되어있는 아이디가 체크했었던 아이디인지 확인
+                if (!String.valueOf(editID.getText()).equals(CheckID)) {
+                    Toast.makeText(getApplicationContext(), "아이디 중복확인을 부탁드립니다.", Toast.LENGTH_SHORT).show();
+                    editID.requestFocus();
+                    return;
+                }
                 try {
                     if(IDcheck==true) {
                         Phprequest request = new Phprequest(Phprequest.BASE_URL + "member_regist.php");
