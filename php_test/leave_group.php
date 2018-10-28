@@ -13,7 +13,7 @@ if ($_POST['ISLEADER']) {
    if ($result = mysqli_query($conn, $sql)) {
      $num_rows = mysqli_num_rows($result);
   	if ($num_rows <= 1) {
-  		$sql = "delete from study202.group where groupID ='".$groupid."'";
+  		$sql = "delete from study202.group where ID ='".$groupid."'";
   	  mysqli_query($conn, $sql);
   	} else {
   		$row = mysqli_fetch_array($result);
