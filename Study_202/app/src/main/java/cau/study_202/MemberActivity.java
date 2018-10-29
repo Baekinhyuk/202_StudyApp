@@ -249,7 +249,6 @@ public class MemberActivity extends AppCompatActivity
         String TAG_ID = "id";
         String TAG_PASSWORD = "password";
         String TAG_NAME = "name";
-        String TAG_NICKNAME = "nickname";
         String TAG_EMAIL = "email";
         String TAG_TEL = "phone";
 
@@ -264,7 +263,6 @@ public class MemberActivity extends AppCompatActivity
                 String id = item.getString(TAG_ID);
                 String password = item.getString(TAG_PASSWORD);
                 String name = item.getString(TAG_NAME);
-                String nickname = item.getString(TAG_NICKNAME);
                 String email = item.getString(TAG_EMAIL);
                 String phone = item.getString(TAG_TEL);
 
@@ -272,7 +270,6 @@ public class MemberActivity extends AppCompatActivity
 
                 personalData.setUserId(id);
                 personalData.setName(name);
-                personalData.setNickname(nickname);
                 personalData.setEmail(email);
                 personalData.setTel(phone);
                 mMemberList.addMember(personalData);

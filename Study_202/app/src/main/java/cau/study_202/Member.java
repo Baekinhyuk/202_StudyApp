@@ -4,7 +4,6 @@ public class Member {
 
     private String userId="";
     private String name="";
-    private String nickname="";
     private String tel="";
     private String email="";
     private String birthday="";
@@ -15,14 +14,12 @@ public class Member {
     private static final int NO_IMAGE = -1;
     private int states = - 1;  // 출석상태 // -1은 출석전을 의미
 
-    public Member(String userId, String name, String nickname, String tel,String email, String birthday){
+    public Member(String userId, String name, String tel,String email, String birthday){
         this.userId = userId;
         this.name = name;
-        this.nickname = nickname;
         this.tel = tel;
         this.email = email;
         this.birthday = birthday;
-
     }
 
     public Member(String userId, double trust){
@@ -45,14 +42,6 @@ public class Member {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname= nickname;
     }
 
     public String getTel() {

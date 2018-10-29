@@ -7,17 +7,12 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class HomeActivity  extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
@@ -52,16 +47,9 @@ public class HomeActivity  extends AppCompatActivity
                     startActivity(i);
                 }
             });
-            /*Button button4=(Button) findViewById(R.id.button4);
-            button4.setOnClickListener(new Button.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(HomeActivity.this,BoardList.class);
-                    startActivity(i);
-                }
-            });*/
-            ImageView joinGroup=(ImageView) findViewById(R.id.join_group);
-            joinGroup.setOnClickListener(new Button.OnClickListener(){
+
+            ImageView searchstudy=(ImageView) findViewById(R.id.searchstudy);
+            searchstudy.setOnClickListener(new Button.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     Intent i = new Intent(HomeActivity.this,BoardList.class);
@@ -69,7 +57,15 @@ public class HomeActivity  extends AppCompatActivity
                 }
             });
 
-
+            ImageView logout=(ImageView) findViewById(R.id.logout);
+            logout.setOnClickListener(new Button.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    Intent i=new Intent(HomeActivity.this, Intro.class);
+                    startActivity(i);
+                    finish();
+                }
+            });
 
         }
 

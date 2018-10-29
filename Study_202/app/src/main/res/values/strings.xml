@@ -2,7 +2,7 @@
     <string name="app_name">study202</string>
     <string name="login">로그인</string>
     <string name="regist">회원가입</string>
-    <string name="loginEmail">이메일를 입력해주세요</string>
+    <string name="loginEmail">아이디를 입력해주세요</string>
     <string name="loginPassword">패스워드를 입력해주세요</string>
 
     <string name="nav_header_title">이름(닉네임)</string>

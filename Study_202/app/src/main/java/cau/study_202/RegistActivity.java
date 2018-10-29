@@ -56,11 +56,13 @@ import static android.app.AlertDialog.*;
 public class RegistActivity extends AppCompatActivity {
 
     private EditText editID,editEmail, editPassword, editPasswordCheck; // 아이디, 이메일, 비밀번호, 비밀번호 확인
-    private EditText editName, editNickname, editBirth; // 이름, 닉네임, 생일 입력
+    private EditText editName, editBirth; // 이름, 생일 입력
     private EditText editPhone; // 전화번호 입력
-    private ImageButton btnIDCheck, btnNicknameCheck; // 닉네임 중복 확인 버튼
+    private ImageButton btnIDCheck; // 이름 중복 확인 버튼
     private RadioGroup RbtnGroup; // 성별 라디오 버튼 그룹
     private ImageButton btnDone, btnCancel; // 가입, 취소 버튼
+    private boolean IDcheck = false;
+    private String CheckID = "";
 
     // datePicker 사용
     private SimpleDateFormat dateFormatter;
@@ -86,7 +88,6 @@ public class RegistActivity extends AppCompatActivity {
         editPasswordCheck = (EditText) findViewById(R.id.editPasswordCheck);
 
         editName = (EditText) findViewById(R.id.editName);
-        editNickname = (EditText) findViewById(R.id.editNickname);
         editPhone = (EditText)findViewById(R.id.editPhone);
         // 생년월일 입력 시 입력되는 형태
         editBirth = (EditText) findViewById(R.id.editBirth);
@@ -96,7 +97,6 @@ public class RegistActivity extends AppCompatActivity {
         btnDone = (ImageButton) findViewById(R.id.btnDone);
         btnCancel = (ImageButton) findViewById(R.id.btnCancel);
         btnIDCheck = (ImageButton) findViewById(R.id.btnIDCheck);
-        btnNicknameCheck = (ImageButton) findViewById(R.id.btnNicknameCheck);
         //btnClickEvent();
 
         // 생년월일 눌렀을 때 datePicker 띄우기
@@ -135,6 +135,36 @@ public class RegistActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
+            }
+        });
+
+        // 취소 버튼 누르면 이전 화면으로 돌아감
+        btnIDCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 아이디 입력 확인
+                if (editID.getText().toString().length() == 0) {
+                    Toast.makeText(RegistActivity.this, "아이디를 입력하세요", Toast.LENGTH_SHORT).show();
+                    editID.requestFocus();
+                    return;
+                }
+                try {
+                    Phprequest request = new Phprequest(Phprequest.BASE_URL +"sameIDcheck.php");
+                    String result = request.sameIDcheck(String.valueOf(editID.getText()));
+                    if(Integer.parseInt(result)==0){
+                        Toast.makeText(getApplication(),"사용가능한 ID입니다",Toast.LENGTH_SHORT).show();
+                        IDcheck = true;
+                        //체크했을 당시에 아이디를 임시로 저장
+                        CheckID = String.valueOf(editID.getText());
+                    }
+                    if(Integer.parseInt(result)==1){
+                        Toast.makeText(getApplication(),"사용불가능한 ID입니다",Toast.LENGTH_SHORT).show();
+                        IDcheck = false;
+                    }
+                    //Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -207,16 +237,22 @@ public class RegistActivity extends AppCompatActivity {
                     editNickname.requestFocus();
                     return;
                 }*/
-
+                //가입버튼을 눌렀을 시 현재 입력되어있는 아이디가 체크했었던 아이디인지 확인
+                if (!String.valueOf(editID.getText()).equals(CheckID)) {
+                    Toast.makeText(getApplicationContext(), "아이디 중복확인을 부탁드립니다.", Toast.LENGTH_SHORT).show();
+                    editID.requestFocus();
+                    return;
+                }
                 try {
-                    Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_regist.php");
-                    String result = request.registmember(String.valueOf(editID.getText()),String.valueOf(editPassword.getText()),String.valueOf(editName.getText()),String.valueOf(editNickname.getText()),String.valueOf(editEmail.getText()),String.valueOf(editPhone.getText()),String.valueOf(editBirth.getText()));
-                    if(result.equals("1")){
-                        Toast.makeText(getApplication(),"정상적으로 가입되었습니다.",Toast.LENGTH_SHORT).show();
-                        finish();
-                    }
-                    else{
-                        Toast.makeText(getApplication(),"가입에 실패하였습니다.",Toast.LENGTH_SHORT).show();
+                    if(IDcheck==true) {
+                        Phprequest request = new Phprequest(Phprequest.BASE_URL + "member_regist.php");
+                        String result = request.registmember(String.valueOf(editID.getText()), String.valueOf(editPassword.getText()), String.valueOf(editName.getText()), String.valueOf(editEmail.getText()), String.valueOf(editPhone.getText()), String.valueOf(editBirth.getText()));
+                        if (result.equals("1")) {
+                            Toast.makeText(getApplication(), "정상적으로 가입되었습니다.", Toast.LENGTH_SHORT).show();
+                            finish();
+                        } else {
+                            Toast.makeText(getApplication(), "가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }catch (MalformedURLException e){
                     e.printStackTrace();

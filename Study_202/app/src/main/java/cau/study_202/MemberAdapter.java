@@ -21,7 +21,6 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     public static class MyViewHolder extends RecyclerView.ViewHolder {
         protected TextView userId;
         protected TextView name;
-        protected TextView nickname;
         protected TextView tel;
         protected TextView email;
 
@@ -29,7 +28,6 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             super(view);
             userId = view.findViewById(R.id.card_userid);
             name = view.findViewById(R.id.card_member_name);
-            nickname = view.findViewById(R.id.card_nickname);
             tel = view.findViewById(R.id.card_tel);
             email = view.findViewById(R.id.card_email);
         }
@@ -48,7 +46,6 @@ public class MemberAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         MyViewHolder myViewHolder = (MyViewHolder) holder;
         myViewHolder.userId.setText(mMemberList.getMembers().get(position).getUserId());
         myViewHolder.name.setText(mMemberList.getMembers().get(position).getName());
-        myViewHolder.nickname.setText(mMemberList.getMembers().get(position).getNickname());
         myViewHolder.tel.setText(mMemberList.getMembers().get(position).getTel());
         myViewHolder.email.setText(mMemberList.getMembers().get(position).getEmail());
     }
