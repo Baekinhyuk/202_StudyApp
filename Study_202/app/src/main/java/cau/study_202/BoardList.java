@@ -65,7 +65,7 @@ public class BoardList extends AppCompatActivity
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR_PORTRAIT);
 
         //Toolbar 적용하기 위해서 .HomeActivity Theme 제거(AndroidManifest에서)
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_board);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_boardlist);
