@@ -13,11 +13,24 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.util.Random;
+import cau.study_202.network.Phprequest;
 
 public class HomeActivity  extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-        @Override
+    private String quotecontent = "";
+    private String quoteauthor = "";
+
+    @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_home);
@@ -37,6 +50,21 @@ public class HomeActivity  extends AppCompatActivity
 
             NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
             navigationView.setNavigationItemSelectedListener(this);
+
+            TextView content = (TextView)findViewById(R.id.saying);
+            TextView author = (TextView)findViewById(R.id.author);
+
+
+        try {
+            Phprequest request = new Phprequest(Phprequest.BASE_URL +"quote.php");
+            Random random = new Random();
+            String result = request.quote(String.valueOf((random.nextInt(24)+1)));
+            inputquote(result);
+            content.setText(quotecontent);
+            author.setText(quoteauthor);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
 
             ImageView mystudy=(ImageView) findViewById(R.id.mystudy);
             mystudy.setOnClickListener(new Button.OnClickListener(){
@@ -133,5 +161,20 @@ public class HomeActivity  extends AppCompatActivity
         return true;
     }
 
+    private void inputquote(String result) {
 
+        String TAG_JSON = "quote";
+        String TAG_CONTENT = "content";
+        String TAG_AUTHOR = "author";
+
+        try {
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            JSONObject item = jsonArray.getJSONObject(0);
+            quotecontent = item.getString(TAG_CONTENT);
+            quoteauthor = item.getString(TAG_AUTHOR);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -89,7 +89,7 @@ public class MemberFragment extends Fragment {
                 personalData.setTel(phone);
                 personalData.setTrust(Double.parseDouble(trust));
                 //임의로 state일단 해놓음
-                personalData.setStates(i);
+                personalData.setStates(0);
 
                 if(id.equals(leader)){
                     personalData.setLeader();

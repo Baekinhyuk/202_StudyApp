@@ -110,6 +110,17 @@ public class Phprequest {
         }
     }
 
+    public String quote(final String ID){
+        try {
+            String postData = "ID=" + ID;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
+    }
+
     private String accept(final String postData){
         try {
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
