@@ -93,16 +93,37 @@ public class MemberManageFragment extends Fragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        /* 가입 수락 하시겠습니까? dialog // leader인 경우에만 dialog 띄우기
-                        Intent intent = new Intent(getActivity(), ChanShowBoardActivity.class); // intent 되는 activty에 알맞은 data 출력
-                        Board currentBoard = boards.get(position);
-                        intent.putExtra("title", currentBoard.getTitle());
-                        intent.putExtra("content", currentBoard.getContent());
-                        intent.putExtra("author", currentBoard.getMemberId());
-                        intent.putExtra("id", currentBoard.getId());
 
-                        startActivity(intent);
-                        */
+                /* 가입 수락 하시겠습니까? dialog // leader인 경우에만 dialog 띄우기 */
+                if (!LoginStatus.isLeader())
+                    return;
+
+                final Member member = members.get(position);
+
+                alertdialog.setMessage("수락 하시겠습니까?");
+                // 확인버튼
+                alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AcceptMember task = new AcceptMember();
+                        task.execute( Phprequest.BASE_URL+"accept_member.php","");
+                        pd = "ID="+member.getUserId()+"&"
+                                +"GROUPID="+LoginStatus.getGroupID();
+
+                    }
+                });
+                // 취소버튼
+                alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            }
+                });
+                // 메인 다이얼로그 생성
+                AlertDialog alert = alertdialog.create();
+                alert.show();
+
+
+
                     }
                 });
 
@@ -264,6 +285,90 @@ public class MemberManageFragment extends Fragment {
             }
             else{
                 Toast.makeText(activity,"탈퇴 과정에 문제가 발생했습니다.",Toast.LENGTH_SHORT).show();
+                Log.i("PHPRequest", result);
+            }
+
+
+        }
+
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+
+            try {
+
+                URL url = new URL(serverURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestMethod("POST");
+                conn.setConnectTimeout(15000);
+                conn.setDoOutput(true);
+                conn.setDoInput(true);
+
+                OutputStream outputStream = conn.getOutputStream();
+
+                outputStream.write(pd.getBytes("utf-8"));
+                outputStream.flush();
+                outputStream.close();
+                String result = readStream(conn.getInputStream());
+                conn.disconnect();
+                Log.i("PHPRequest", result);
+
+                return result;
+
+            } catch (Exception e) {
+
+                Log.d("thread", "GetData : Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+
+        private String readStream(InputStream in) throws IOException {
+            StringBuilder jsonHtml = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in, "utf-8"));
+            String line = null;
+
+            while((line = reader.readLine()) != null)
+                jsonHtml.append(line);
+
+            reader.close();
+            return jsonHtml.toString();
+        }
+    }
+
+    public class AcceptMember extends AsyncTask<String, Void, String> {
+
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+
+            if(result.equals("1")){
+                Toast.makeText(activity, "수락 되었습니다.", Toast.LENGTH_SHORT).show();
+
+                /*새로 고침 하는 코드*/
+                members.clear();
+                GetMemberData task = new GetMemberData();
+                task.execute( Phprequest.BASE_URL+"fetch_waiting.php"+"?GROUPID="+LoginStatus.getGroupID(),"");
+                adapter.notifyDataSetChanged();
+
+            }
+            else{
+                Toast.makeText(activity,"수락 과정에 문제가 발생했습니다.",Toast.LENGTH_SHORT).show();
                 Log.i("PHPRequest", result);
             }
 
