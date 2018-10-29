@@ -20,4 +20,6 @@ public class LoginStatus {
 
     public static void setLeader() {isLeader = true;}
 
+    public static void logout() {isLeader = false; groupID = -1; memberID = "";}
+
 }

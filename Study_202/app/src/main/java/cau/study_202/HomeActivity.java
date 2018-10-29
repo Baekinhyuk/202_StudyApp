@@ -63,6 +63,7 @@ public class HomeActivity  extends AppCompatActivity
                 public void onClick(View v) {
                     Intent i=new Intent(HomeActivity.this, Intro.class);
                     startActivity(i);
+                    LoginStatus.logout();
                     finish();
                 }
             });

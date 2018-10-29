@@ -17,7 +17,7 @@ import cau.study_202.LoginStatus;
 import cau.study_202.MemberActivity;
 
 public class Phprequest {
-    public static final String BASE_URL = "http://54.180.65.106/";
+    public static final String BASE_URL = "https://cauteam202.com/";
     private URL url;
 
     public Phprequest(String url) throws MalformedURLException { this.url = new URL(url); }
