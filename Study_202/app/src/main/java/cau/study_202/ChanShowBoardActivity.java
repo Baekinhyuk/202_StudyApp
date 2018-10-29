@@ -51,7 +51,6 @@ public class ChanShowBoardActivity extends AppCompatActivity {
             toolbar.setVisibility(View.GONE);
         }
 
-
         TextView titleTextView = (TextView) findViewById(R.id.board_title);
         titleTextView.setText(title);
 
