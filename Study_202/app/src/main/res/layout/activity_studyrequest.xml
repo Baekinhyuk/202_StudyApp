@@ -101,8 +101,8 @@
                     android:layout_weight="1"
                     android:ems="10"
                     android:gravity="center"
-                    android:inputType="time"
-                    android:text="09:00" />
+                    android:hint="09:00"
+                    android:inputType="time" />
 
                 <TextView
                     android:layout_width="100dp"
@@ -124,8 +124,8 @@
                     android:gravity="center"
 
 
-                    android:inputType="time"
-                    android:text="09:10" />
+                    android:hint="09:10"
+                    android:inputType="time" />
 
             </LinearLayout>
 
@@ -154,8 +154,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:inputType="time"
-                    android:text="1000" />
+                    android:hint="1000"
+                    android:inputType="time" />
 
                 <TextView
                     android:layout_width="100dp"
@@ -171,8 +171,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:inputType="time"
-                    android:text="3000" />
+                    android:hint="3000"
+                    android:inputType="time" />
 
             </LinearLayout>
 
