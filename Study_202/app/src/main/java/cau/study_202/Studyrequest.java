@@ -75,7 +75,7 @@ public class Studyrequest extends AppCompatActivity {
 
                 // 출석시간 입력 확인
                 EditText editPresentTime = (EditText) findViewById(R.id.input_present_time);
-                if (editPresentTime.getText().toString().length() == 0) {
+                    if (editPresentTime.getText().toString().length() == 0) {
                     Toast.makeText(Studyrequest.this, "출석 시간을 입력하세요", Toast.LENGTH_SHORT).show();
                     editPresentTime.requestFocus();
                     return;
