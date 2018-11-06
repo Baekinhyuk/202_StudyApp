@@ -42,7 +42,7 @@ public class ChanMemberAdapter extends ArrayAdapter<Member> {
         // nickname부분에 이름을 추가
         TextView nicknameTextView = (TextView) listItemView.findViewById(R.id.nick_name);
 
-        nicknameTextView.setText(currentMember.getName());
+        nicknameTextView.setText(currentMember.getUserId());
 
         // 신뢰도
         TextView trustTextView = (TextView) listItemView.findViewById(R.id.trust);

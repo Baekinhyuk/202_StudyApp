@@ -7,6 +7,19 @@ $conn=mysqli_connect("localhost","root","a123s123","study202");
   $_POST['GROUPID']
 
   */
+
+  $sql = "update study202.member set groupID = NULL where id = '".$_POST['ID']."'";
+  $result = mysqli_query($conn, $sql);
+
+  if($result){
+
+      echo "1";
+
+  }else{
+      echo $sql;
+       }
+
+
 $groupid = $_POST['GROUPID'];
 if ($_POST['ISLEADER']) {
    $sql = "select ID from study202.member where groupID =".$groupid." order by TRUST desc";
@@ -27,16 +40,7 @@ if ($_POST['ISLEADER']) {
 
   }
 
-  $sql = "update study202.member set groupID = NULL where id = '".$_POST['ID']."'";
-  $result = mysqli_query($conn, $sql);
 
-  if($result){
-
-  		echo "1";
-
-  }else{
-      echo $sql;
-       }
 
       mysqli_close($conn);
 ?>

@@ -1,12 +1,18 @@
 package cau.study_202;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -26,18 +32,35 @@ import cau.study_202.network.Phprequest;
  */
 public class MemberFragment extends Fragment {
 
+    private Activity activity;
+    AlertDialog.Builder alertdialog;
+    ArrayList<Member> mMemberList;
+
     public MemberFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        if (context instanceof Activity) {
+            activity = (Activity) context;
+        }
+
     }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        alertdialog = new AlertDialog.Builder(activity);
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.chan_member_list, container, false);
 
-        ArrayList<Member> mMemberList = new ArrayList<Member>();
+        mMemberList = new ArrayList<Member>();
         try {
             Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_output.php");
             String result = request.memberoutput(Integer.toString(LoginStatus.getGroupID()));
@@ -51,6 +74,41 @@ public class MemberFragment extends Fragment {
 
         ListView listview = (ListView) rootView.findViewById(R.id.list);
         listview.setAdapter(adapter);
+
+        listview.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        final Member member = mMemberList.get(position);
+
+                        alertdialog.setMessage(member.getUserId()+"님을 신고 하시겠습니까?");
+                        // 확인버튼
+                        alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener(){
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(getActivity(), ChanVoteActivity.class); // intent 되는 activty에 알맞은 data 출력
+
+                                intent.putExtra("ID", member.getUserId());
+
+                                startActivity(intent);
+
+                            }
+                        });
+                        // 취소버튼
+                        alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+                        // 메인 다이얼로그 생성
+                        AlertDialog alert = alertdialog.create();
+                        alert.show();
+
+
+
+                    }
+                });
 
         return rootView;
 

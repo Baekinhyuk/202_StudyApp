@@ -12,7 +12,7 @@ public class Member {
     private int fine = 0; // 벌금
     private int leaderImageResoureceId = NO_IMAGE;  // leader 인지 아닌지에 대한 정보 (leader를 나타내는 이미지로 대신 표현)
     private static final int NO_IMAGE = -1;
-    private int states = - 1;  // 출석상태 // -1은 출석전을 의미
+    private int states = - 1;  // 출석상태 // -1은 출석전을 의미 // 0은 출석 // 1은 지각 // 2는 결석 // 3은 쉬는날
 
     public Member(String userId, String name, String tel,String email, String birthday){
         this.userId = userId;
