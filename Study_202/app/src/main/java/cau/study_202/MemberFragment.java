@@ -123,6 +123,7 @@ public class MemberFragment extends Fragment {
         String TAG_TEL = "phone";
         String TAG_LEADER = "leaderID";
         String TAG_TRUST = "trust";
+        String TAG_ATT = "attendence";
 
         try {
 
@@ -138,6 +139,7 @@ public class MemberFragment extends Fragment {
                 String phone = item.getString(TAG_TEL);
                 String leader = item.getString(TAG_LEADER);
                 String trust = item.getString(TAG_TRUST);
+                String att = item.getString(TAG_ATT);
 
                 Member personalData = new Member();
 
@@ -147,7 +149,8 @@ public class MemberFragment extends Fragment {
                 personalData.setTel(phone);
                 personalData.setTrust(Double.parseDouble(trust));
                 //임의로 state일단 해놓음
-                personalData.setStates(0);
+                //personalData.setStates(0);
+                personalData.setStates(Integer.parseInt(att));
 
                 if(id.equals(leader)){
                     personalData.setLeader();
