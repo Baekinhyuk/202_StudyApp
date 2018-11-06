@@ -63,10 +63,11 @@
         <activity
             android:name=".ChanModifyBoardActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".ChanVoteActivity"
+        <activity
+            android:name=".ChanVoteActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ChanShowVoteActivity"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
     </application>
 
 </manifest>

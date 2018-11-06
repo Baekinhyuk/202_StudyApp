@@ -9,10 +9,25 @@ public class Member {
     private String birthday="";
     private int groupID = -1;
     private double trust = 0.0;
-    private int fine = 0; // 벌금
+    private int fine = 0; // 내야할 벌금
     private int leaderImageResoureceId = NO_IMAGE;  // leader 인지 아닌지에 대한 정보 (leader를 나타내는 이미지로 대신 표현)
     private static final int NO_IMAGE = -1;
     private int states = - 1;  // 출석상태 // -1은 출석전을 의미 // 0은 출석 // 1은 지각 // 2는 결석 // 3은 쉬는날
+    private int total = 0; // 총 출석일수
+    private int present = 0; // 총 출석일수
+    private int absent = 0; // 총 결석일수
+    private int late = 0; // 총 지각일수
+    private int totalfine = 0; // 총 누적 벌금
+
+    public Member(String userId, int total, int present, int absent, int late, int totalfine, int fine) {
+        this.userId = userId;
+        this.total = total;
+        this.present = present;
+        this.absent = absent;
+        this.late = late;
+        this.totalfine = totalfine;
+        this.fine = fine;
+    }
 
     public Member(String userId, String name, String tel,String email, String birthday){
         this.userId = userId;
@@ -89,4 +104,10 @@ public class Member {
     public int getStates() { return states;}
 
     public void setStates(int states) { this.states = states; }
+
+    public int getTotal() {return total;}
+    public int getPresent() {return present;}
+    public int getAbsent() {return absent;}
+    public int getLate() {return late;}
+    public int getTotalfine() {return totalfine;}
 }
