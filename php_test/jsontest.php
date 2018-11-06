@@ -14,7 +14,7 @@ for($i =0;$i<$row_num;$i++){
 $row = mysqli_fetch_array($result);
 echo "{";
 
-echo "\"id\":\"$row[ID]\", \"password\":\"$row[PASSWORD]\" , \"name\":\"$row[NAME]\", \"nickname\":\"$row[NICKNAME]\", \"email\":\"$row[EMAIL]\",\"phone\":\"$row[PHONE]\"";
+echo "\"id\":\"$row['ID']\", \"password\":\"$row['PASSWORD']\" , \"name\":\"$row['NAME']\", \"nickname\":\"$row['NICKNAME']\", \"email\":\"$row['EMAIL']\",\"phone\":\"$row['PHONE']\"";
 
 echo "}";
 if($i<$row_num-1){
