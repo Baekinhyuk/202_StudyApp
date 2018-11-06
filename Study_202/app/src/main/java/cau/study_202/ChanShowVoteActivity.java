@@ -1,6 +1,5 @@
 package cau.study_202;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,69 +21,71 @@ import java.net.URL;
 
 import cau.study_202.network.Phprequest;
 
-public class ChanVoteActivity extends AppCompatActivity {
+public class ChanShowVoteActivity extends AppCompatActivity {
 
     Intent intent;
-    String ID;
+    String title ;
+    String content;
     String author;
+    int id;
+    String votedid;
+    int votetype;
+    int numofvoters;
+    int pros;
+    int cons;
     String pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chan_vote);
+        setContentView(R.layout.activity_chan_show_vote);
 
         intent = getIntent();
-        ID = intent.getStringExtra("ID");
-        Log.i("intent", "\nid:"+ID+"\n");
+        title = intent.getStringExtra("title");
+        content = intent.getStringExtra("content");
+        author = intent.getStringExtra("author");
+        id = intent.getIntExtra("id", -1);
+        votedid = intent.getStringExtra("votedid");
+        votetype = intent.getIntExtra("votetype", -1);
+        numofvoters = intent.getIntExtra("numofvoters", -1);
+        pros = intent.getIntExtra("pros", -1);
+        cons = intent.getIntExtra("cons", -1);
 
-        TextView title = findViewById(R.id.vote_title);
-        title.setText(ID + "님에 대한 투표");
+        Log.i("intent", "\ntitle:"+title+"\ncontent:"+content+"\nauthor:"+author+"\nboardid:"+ pros);
 
 
-        // 돌아가기 눌렀을때
-        Button returnButton = (Button) findViewById(R.id.board_return_button);
-        returnButton.setOnClickListener(new View.OnClickListener() {
+        TextView titleTextView = (TextView) findViewById(R.id.board_title);
+        titleTextView.setText(title);
+
+        TextView contentTextView = (TextView) findViewById(R.id.board_contents);
+        contentTextView.setText(content);
+
+
+        // 투표 눌렀을때
+        Button voteButton = (Button) findViewById(R.id.vote);
+        voteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                RadioButton pros=(RadioButton)findViewById(R.id.pros);
+
+                pd = "ID="+id+"&"+
+                        "MEMBERID=" + LoginStatus.getMemberID() + "&";
+                if (pros.isChecked()){
+                    pd = pd + "VOTE="+0;
+                } else
+                    pd = pd + "VOTE="+1;
+
+                Vote task = new Vote();
+                task.execute(Phprequest.BASE_URL+"vote.php","");
+
                 finish();
             }
         });
-        // 생성하기 눌렀을때
-        Button createButton = (Button) findViewById(R.id.board_create_button);
-        createButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                EditText editContent = (EditText) findViewById(R.id.board_input_contents);
-                // 내용 입력 확인
-                if (editContent.getText().toString().length() == 0) {
-                    Toast.makeText(ChanVoteActivity.this, "내용을 입력하세요", Toast.LENGTH_SHORT).show();
-                    editContent.requestFocus();
-                    return;
-                }
 
-                RadioGroup group=(RadioGroup)findViewById(R.id.radioGroup);
-                RadioButton checkin=(RadioButton)findViewById(R.id.check_in_vote);
-                RadioButton leave=(RadioButton)findViewById(R.id.leave_vote);
-                //버튼에 따라 보내는거 달라짐
-                int votetype = 0;
-                if(leave.isChecked())
-                    votetype = 1;
-
-                pd = "AUTHOR="+LoginStatus.getMemberID()+"&"
-                        +"GROUPID="+LoginStatus.getGroupID()+"&"
-                        +"VOTEDID="+ID+"&"
-                        +"VOTETYPE="+votetype+"&"
-                        +"CONTENT="+editContent.getText();
-
-                CreateVote task = new CreateVote();
-                task.execute(Phprequest.BASE_URL + "create_vote.php", "");
-            }
-        });
     }
 
-    private class CreateVote extends AsyncTask<String, Void, String> {
+    public class Vote extends AsyncTask<String, Void, String> {
 
         @Override
         protected void onPreExecute() {
@@ -96,23 +95,22 @@ public class ChanVoteActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
+            Log.i("뭔데", result);
             if(result.equals("1")){
-                Toast.makeText(getApplication(),"정상적으로 생성되었습니다.",Toast.LENGTH_SHORT).show();
-                finish();
+                Toast.makeText(getApplication(),"투표하셨습니다.",Toast.LENGTH_SHORT).show();
+
             }
             else{
-                Toast.makeText(getApplication(),"생성과정에 문제가 발생했습니다.",Toast.LENGTH_SHORT).show();
-                Log.i("PHPRequest", result);
+                Toast.makeText(getApplication(),"이미 투표 하셨습니다.",Toast.LENGTH_SHORT).show();
+                Log.i("이미 투표", result);
             }
-
         }
+
 
         @Override
         protected String doInBackground(String... params) {
 
             String serverURL = params[0];
-
             try {
 
                 URL url = new URL(serverURL);
@@ -137,6 +135,7 @@ public class ChanVoteActivity extends AppCompatActivity {
 
             } catch (Exception e) {
 
+                Log.d("thread", "GetData : Error ", e);
 
                 return null;
             }
