@@ -12,7 +12,7 @@ echo "\"board\":";
 echo "[";
 for($i =0;$i<$row_num;$i++){
 $row = mysqli_fetch_array($result);
-//$row[CONTENT] = str_replace("\n", "\\n", $row[CONTENT]);
+$row['CONTENT'] = str_replace("\n", "\\n", $row['CONTENT']);
 echo "{";
 
 echo "\"id\":\"$row[ID]\", \"title\":\"$row[TITLE]\", \"content\":\"$row[CONTENT]\", \"groupid\":\"$row[GROUPID]\", \"memberid\":\"$row[MEMBERID]\", \"attendencetime\":\"$row[ATTENDENCETIME]\", \"attendencelatetime\":\"$row[ATTENDENCELATETIME]\", \"latefine\":\"$row[LATEFINE]\", \"absencefine\":\"$row[ABSENCEFINE]\"";
