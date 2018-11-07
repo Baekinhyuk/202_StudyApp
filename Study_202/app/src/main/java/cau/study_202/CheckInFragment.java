@@ -97,8 +97,11 @@ public class CheckInFragment extends Fragment {
                 Toast.makeText(activity,"지각",Toast.LENGTH_SHORT).show();
             } else if(result.equals("2")){
                 Toast.makeText(activity,"결석",Toast.LENGTH_SHORT).show();
-            } else
-                Toast.makeText(activity,"이미 출석하셨습니다.",Toast.LENGTH_SHORT).show();
+            } else if(result.equals("3")) {
+                Toast.makeText(activity, "출석은 한시간 전부터 가능합니다.", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(activity, "이미 출석하셨습니다.", Toast.LENGTH_SHORT).show();
+            }
         }
         @Override
         protected String doInBackground(String... params) {
