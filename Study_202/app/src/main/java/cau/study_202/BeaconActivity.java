@@ -89,26 +89,20 @@ public class BeaconActivity extends AppCompatActivity {
         ScanFilter scan = scanFilter.build();
         scanFilters.add(scan);
 
-        //블루투스 연결시에만 실행
-        if(mBluetoothAdapter.isEnabled()){
-            mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
-        }
+        //블루투스자동연결
+        mBluetoothAdapter.enable();
+    }
 
-        // 블루투스 권한 및 활성화 코드드
-        if(!mBluetoothAdapter.isEnabled()){
-            Toast.makeText(getApplicationContext(),"블루투스가연결이되어야합니다.",Toast.LENGTH_LONG).show();
-            //Intent intent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            //startActivityForResult(intent, BLUETOOTH_REQUEST_CODE);
-        }
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ScanSettings scanSettings = mScanSettings.build();
+        mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
         beaconImage.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
-                if(attbeacon == 0){
-                    //비콘다시 검색
-                    ScanSettings scanSettings = mScanSettings.build();
-                    mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
-                }
+                //비콘다시 검색
+                if(attbeacon == 0) onResume();
                 if(attbeacon == 1){
                     //비콘연결성공 및 출석하는 거 구현
                     beaconabove.setText("출석하였습니다.");
@@ -170,10 +164,6 @@ public class BeaconActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
 
     @Override
     protected void onPause(){
@@ -181,8 +171,8 @@ public class BeaconActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
         mBluetoothLeScanner.stopScan(mScanCallback);
         mBluetoothAdapter.disable();
     }
