@@ -37,8 +37,7 @@ if($num_rows == 0){
       echo "2";
     }
       $result = mysqli_query($conn, $query);
-  }
-
+  } else
     echo "3";
 } else {
   echo "-1";
