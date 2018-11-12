@@ -12,7 +12,7 @@ echo "\"groupboard\":";
 echo "[";
 for($i =0;$i<$row_num;$i++){
 $row = mysqli_fetch_array($result);
-//$row[CONTENT] = str_replace("\n", "\\n", $row[CONTENT]);
+$row['content'] = str_replace("\n", "\\n", $row['content']);
 echo "{";
 
 echo "\"id\":\"$row[ID]\", \"title\":\"$row[title]\" , \"content\":\"$row[content]\", \"groupid\":\"$row[groupID]\", \"memberid\":\"$row[memberID]\"";

@@ -3,6 +3,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -26,6 +27,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import cau.study_202.network.Phprequest;
+
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -63,9 +65,11 @@ public class CheckInFragment extends Fragment {
         beaconButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                makepd(1);
-                CheckIn task = new CheckIn();
-                task.execute( Phprequest.BASE_URL+"check_in.php","");
+                Intent i = new Intent(getActivity(), BeaconActivity.class);
+                startActivity(i);
+                //makepd(1);
+                //CheckIn task = new CheckIn();
+                //task.execute( Phprequest.BASE_URL+"check_in.php","");
             }
         });
         gpsButton.setOnClickListener(new View.OnClickListener() {
@@ -99,9 +103,8 @@ public class CheckInFragment extends Fragment {
                 Toast.makeText(activity,"결석",Toast.LENGTH_SHORT).show();
             } else if(result.equals("3")) {
                 Toast.makeText(activity, "출석은 한시간 전부터 가능합니다.", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(activity, "이미 출석하셨습니다.", Toast.LENGTH_SHORT).show();
-            }
+            } else
+                Toast.makeText(activity,"이미 출석하셨습니다.",Toast.LENGTH_SHORT).show();
         }
         @Override
         protected String doInBackground(String... params) {

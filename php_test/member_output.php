@@ -11,7 +11,8 @@ echo "[";
 for($i =0;$i<$row_num;$i++){
 $row = mysqli_fetch_array($result);
 echo "{";
-$sqlattendence = "SELECT attendence.state from study202.attendence where attendence.memberID = '$row[ID]'";
+$today = date('Y-m-d');  
+$sqlattendence = "SELECT attendence.state from study202.attendence where attendence.memberID = '$row[ID]' and DATE(attendence.datetime)="."'".$today."'";
 $resultattendence=mysqli_query($conn,$sqlattendence);
 $row_num_att = mysqli_num_rows($resultattendence);
 $row_att = mysqli_fetch_array($resultattendence);
