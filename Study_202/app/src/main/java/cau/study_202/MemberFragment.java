@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,8 @@ public class MemberFragment extends Fragment {
     private Activity activity;
     AlertDialog.Builder alertdialog;
     ArrayList<Member> mMemberList;
+    SwipeRefreshLayout pullToRefresh;
+    View rootView;
 
     public MemberFragment() {
         // Required empty public constructor
@@ -49,7 +52,12 @@ public class MemberFragment extends Fragment {
         }
 
     }
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMemberList.clear();
+        accept_member_list(rootView,mMemberList);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +66,26 @@ public class MemberFragment extends Fragment {
         alertdialog = new AlertDialog.Builder(activity);
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.chan_member_list, container, false);
+        rootView = inflater.inflate(R.layout.chan_member_list, container, false);
 
         mMemberList = new ArrayList<Member>();
+
+        pullToRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh_memberlist);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mMemberList.clear();
+                accept_member_list(rootView,mMemberList);
+                pullToRefresh.setRefreshing(false);
+            }
+
+        });
+
+        return rootView;
+
+    }
+
+    private void accept_member_list(View rootView,final ArrayList<Member> mMemberList){
         try {
             Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_output.php");
             String result = request.memberoutput(Integer.toString(LoginStatus.getGroupID()));
@@ -69,7 +94,6 @@ public class MemberFragment extends Fragment {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-
         ChanMemberAdapter adapter = new ChanMemberAdapter(getActivity(), mMemberList);
 
         ListView listview = (ListView) rootView.findViewById(R.id.list);
@@ -104,14 +128,8 @@ public class MemberFragment extends Fragment {
                         // 메인 다이얼로그 생성
                         AlertDialog alert = alertdialog.create();
                         alert.show();
-
-
-
                     }
                 });
-
-        return rootView;
-
     }
 
     private void show_member(String result, ArrayList<Member> mMemberList) {
