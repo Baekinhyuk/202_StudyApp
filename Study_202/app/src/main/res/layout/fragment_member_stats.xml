@@ -19,13 +19,7 @@
 
         />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="left"
-        android:padding="16dp"
-        android:text="정산하기"
-        android:textAppearance="@android:style/TextAppearance.Material"/>
+
 
 
 </LinearLayout>
