@@ -25,7 +25,7 @@ if($result){
 	$query = "insert into groupsearchboard(TITLE,CONTENT,GROUPID,MEMBERID) values (".$data_stream.")";
 	$result = mysqli_query($conn, $query);
 
-	$query = "update study202.member set groupID = $row['ID'] where ID = '".$_POST['LEADERID']."'";
+	$query = "update study202.member set groupID = ".$row['ID']." where ID = '".$_POST['LEADERID']."'";
 	$result = mysqli_query($conn, $query);
 	if($result)
 		echo "1";

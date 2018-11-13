@@ -33,6 +33,11 @@ if($num_rows == 0) {
 
     if($row['pros'] >= $cutline ) {
       if($row['votetype'] == 0) { //결석으로
+        $sql="select ID from study202.attendence where memberID="."'".$row['votedID']."' order by ID desc";
+        $result = mysqli_query($conn,$sql);
+        $row2 = mysqli_fetch_array($result);
+        $sql="update study202.attendence set state = 2 where ID=".$row2['ID'];
+        $result = mysqli_query($conn,$sql);
 
       }else{ // 강퇴
           $sql="update study202.member set groupID = NULL, fine = 0 where ID ="."'".$row['votedID']."'";
