@@ -12,7 +12,7 @@ $query = "select ID from study202.attendence where memberID="."'".$_POST['ID']."
 $result = mysqli_query($conn, $query);
 $num_rows = mysqli_num_rows($result);
 if($num_rows == 0){
-  $query = "select attendencetime, attendencelatetime from study202.group where ID="."'".$_POST['GROUPID']."'";
+  $query = "select attendencetime, attendencelatetime, absencefine from study202.group where ID="."'".$_POST['GROUPID']."'";
   $result = mysqli_query($conn, $query);
   $row = mysqli_fetch_array($result);
   $attendencetime = strtotime(date('Y-m-d').' '.$row['attendencetime']);
@@ -31,9 +31,14 @@ if($num_rows == 0){
       //$query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
       echo "1";
     } else {
-      // 결석으로 입력
-      $data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."2";
-      $query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
+      // 결석으로 입력 (신뢰도 관련 처리 추가해야함)
+      $query = "update study202.member set fine = fine + ".$row['absencefine']." where ID ="."'".$_POST['ID']."'";
+      $result = mysqli_query($conn, $query);
+      $query = "select fine from study202.member where ID ="."'".$_POST['ID']."'";
+      $result = mysqli_query($conn, $query);
+      $row = mysqli_fetch_array($result);
+      $data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."2,'".$row['fine']."'";
+      $query = "insert into study202.attendence (memberID, method, groupID, state, fine) VALUES (".$data_stream.")";
       echo "2";
       $result = mysqli_query($conn, $query);
     }

@@ -40,7 +40,7 @@ public class ChanDetailStatsAdapter extends ArrayAdapter<Stat> {
 
         TextView fineTextView = (TextView) listItemView.findViewById(R.id.fine);
 
-        fineTextView.setText(currentStat.getFine());
+        fineTextView.setText(currentStat.getFine()+"");
 
         TextView stateTextView = (TextView) listItemView.findViewById(R.id.states);
 
