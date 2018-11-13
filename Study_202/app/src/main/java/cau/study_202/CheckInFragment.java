@@ -106,11 +106,9 @@ public class CheckInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 method = 1;
-                Intent i = new Intent(getActivity(), BeaconActivity.class);
-                startActivity(i);
-                //makepd(1);
-                //CheckIn task = new CheckIn();
-                //task.execute( Phprequest.BASE_URL+"check_in.php","");
+                makepd(1);
+                CheckIn task = new CheckIn();
+                task.execute( Phprequest.BASE_URL+"check_in.php","");
             }
         });
         gpsButton.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +146,9 @@ public class CheckInFragment extends Fragment {
                     }
 
                 } else if(method == 1) { // beacon으로 출석시
-
+                    Intent i = new Intent(getActivity(), BeaconActivity.class);
+                    i.putExtra("state",0);
+                    startActivity(i);
                 } else if(method == 2) { // GPS로 출석시
 
                 }
@@ -166,7 +166,9 @@ public class CheckInFragment extends Fragment {
                     }
 
                 } else if(method == 1) { // beacon으로 출석시
-
+                    Intent i = new Intent(getActivity(), BeaconActivity.class);
+                    i.putExtra("state",1);
+                    startActivity(i);
                 } else if(method == 2) { // GPS로 출석시
 
                 }

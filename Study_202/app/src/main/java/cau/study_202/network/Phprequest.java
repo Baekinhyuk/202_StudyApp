@@ -121,6 +121,18 @@ public class Phprequest {
         }
     }
 
+    public String beacon_attendence(final String memberID,final String groupID,final String state){
+        try {
+            String postData = "memberID=" + memberID+ "&" +"groupID=" + groupID+ "&" +"state=" + state;
+            return accept(postData);
+        }
+        catch (Exception e) {
+            Log.i("PHPRequest", "request was failed.");
+            return null;
+        }
+    }
+
+
     private String accept(final String postData){
         try {
             HttpURLConnection conn = (HttpURLConnection)url.openConnection();
