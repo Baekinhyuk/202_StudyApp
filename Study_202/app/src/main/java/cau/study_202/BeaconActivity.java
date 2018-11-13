@@ -22,12 +22,16 @@ import android.view.View;
 import android.content.Intent;
 import android.app.Activity;
 import android.widget.Toast;
+import android.os.Handler;
 
+import java.net.MalformedURLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
+
+import cau.study_202.network.Phprequest;
 
 public class BeaconActivity extends AppCompatActivity {
 
@@ -52,6 +56,8 @@ public class BeaconActivity extends AppCompatActivity {
 
     ImageView beaconImage;
 
+    int state;
+
     //초기상태는 0 , 출석가능한비콘발견 1, 출석 후 비콘2
     private int attbeacon = 0;
 
@@ -73,15 +79,26 @@ public class BeaconActivity extends AppCompatActivity {
         beaconabove = (TextView)findViewById(R.id.beacon_above);
         beaconImage = (ImageView) findViewById(R.id.beaconbutton);
 
+        //Log.d("state받기 전",Integer.toString(state));
+        state = getIntent().getIntExtra("state",2);
+        //Log.d("state받은 후",Integer.toString(state));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        mBluetoothAdapter.enable();
+        //블루투스자동연결
+        if(!mBluetoothAdapter.isEnabled()){
+            mBluetoothAdapter.enable();
+        }
 
         mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
         mBluetoothLeAdvertiser = mBluetoothAdapter.getBluetoothLeAdvertiser();
         beacon = new Vector<>();
         mScanSettings = new ScanSettings.Builder();
         mScanSettings.setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY);
-        ScanSettings scanSettings = mScanSettings.build();
+        final ScanSettings scanSettings = mScanSettings.build();
 
         scanFilters = new Vector<>();
         ScanFilter.Builder scanFilter = new ScanFilter.Builder();
@@ -89,31 +106,48 @@ public class BeaconActivity extends AppCompatActivity {
         ScanFilter scan = scanFilter.build();
         scanFilters.add(scan);
 
-        //블루투스자동연결
-        mBluetoothAdapter.enable();
-    }
+        Handler delayHandler = new Handler();
+        delayHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
+            }
+        }, 3000);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ScanSettings scanSettings = mScanSettings.build();
-        mBluetoothLeScanner.startScan(scanFilters, scanSettings, mScanCallback);
         beaconImage.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
                 //비콘다시 검색
-                if(attbeacon == 0) onResume();
+                if(attbeacon == 0) {
+                    //onResume();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+                }
                 if(attbeacon == 1){
-                    //비콘연결성공 및 출석하는 거 구현
-                    beaconabove.setText("출석하였습니다.");
-                    beaconImage.setImageResource(R.drawable.check_beacon);
-                    attbeacon = 2;
+                    //여기서 서버에 출석정보전달
+                    try {
+                        Phprequest request = new Phprequest(Phprequest.BASE_URL +"beacon_att.php");
+                        String result = request.beacon_attendence(LoginStatus.getMemberID(),Integer.toString(LoginStatus.getGroupID()),Integer.toString(state));
+                        //비콘연결성공 및 출석하는 거 구현
+                        if(state == 0){
+                            beaconabove.setText("출석하였습니다.");
+                        }
+                        else if(state ==1){
+                            beaconabove.setText("지각하였습니다.");
+                        }
+                        beaconImage.setImageResource(R.drawable.check_beacon);
+                        attbeacon = 2;
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                        beaconabove.setText("출석에 실패하였습니다 다시시도바랍니다.");
+                    }
                 }
             }
         });
     }
 
-    ScanCallback mScanCallback = new ScanCallback() {
+    public ScanCallback mScanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
