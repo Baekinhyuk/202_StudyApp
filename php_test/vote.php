@@ -25,6 +25,28 @@ if($num_rows == 0) {
       $query = "update study202.vote set cons = cons + 1 where ID ="."'".$_POST['ID']."'";
     }
     $result = mysqli_query($conn, $query);
+
+    $query = "select * from study202.vote where ID="."'".$_POST['ID']."'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_array($result);
+    $cutline = (int)((int)$row['numofvoters'] / 2) + 1;
+
+    if($row['pros'] >= $cutline ) {
+      if($row['votetype'] == 0) { //결석으로
+
+      }else{ // 강퇴
+          $sql="update study202.member set groupID = NULL, fine = 0 where ID ="."'".$row['votedID']."'";
+          mysqli_query($conn,$sql);
+      }
+
+      $sql="delete from study202.vote where ID='".$_POST['ID']."'";
+      mysqli_query($conn,$sql);
+    }else if($row['numofvoters'] == ($row['pros'] + $row['cons'])) {
+      $sql="delete from study202.vote where ID='".$_POST['ID']."'";
+      mysqli_query($conn,$sql);
+
+    }
+
     echo "1";
 }else {
   echo $query;
