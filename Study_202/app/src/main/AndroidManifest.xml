@@ -87,7 +87,8 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".ChanShowStatActivity"></activity>
+        <activity android:name=".ChanShowStatActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
