@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -36,8 +37,12 @@ public class ChanBoardAdapter extends ArrayAdapter<Board> {
 
         // content
         TextView contentTextView = (TextView) listItemView.findViewById(R.id.board_content);
+        if(!currentBoard.getContent().equals("")) {
+            contentTextView.setText(currentBoard.getContent());
+        } else {
+            contentTextView.setText("출석 인증 사진입니다.");
+        }
 
-        contentTextView.setText(currentBoard.getContent());
 
         // author
         TextView authorTextView = (TextView) listItemView.findViewById(R.id.board_author);

@@ -21,22 +21,23 @@ if($num_rows == 0){
     //출석가능한 시간 이면서 출석시간보다 시간이 빠른 경우
     if ($attendencetime >= strtotime("now")){
       //출석으로 입력
-      $data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."0";
-      $query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
+      //$data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."0";
+      //$query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
       echo "0";
 
     } else if ( $attendencetime < strtotime("now") && strtotime("now") <= $attendencelatetime ) {
       //지각으로 입력
-      $data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."1";
-      $query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
+      //$data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."1";
+      //$query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
       echo "1";
     } else {
       // 결석으로 입력
       $data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."2";
       $query = "insert into study202.attendence (memberID, method, groupID, state) VALUES (".$data_stream.")";
       echo "2";
-    }
       $result = mysqli_query($conn, $query);
+    }
+
   } else
     echo "3";
 } else {

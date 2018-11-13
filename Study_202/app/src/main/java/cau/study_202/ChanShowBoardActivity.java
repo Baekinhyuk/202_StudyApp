@@ -3,6 +3,8 @@ package cau.study_202;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -13,10 +15,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -30,7 +34,11 @@ public class ChanShowBoardActivity extends AppCompatActivity {
     String title ;
     String content;
     String author;
+    String image;
     int boardId;
+
+    ImageView imageView;
+    Bitmap bmImg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,18 +49,27 @@ public class ChanShowBoardActivity extends AppCompatActivity {
         content = intent.getStringExtra("content");
         author = intent.getStringExtra("author");
         boardId = intent.getIntExtra("id", -1);
+        image = intent.getStringExtra("image");
         Log.i("intent", "\ntitle:"+title+"\ncontent:"+content+"\nauthor:"+author+"\nboardid:"+boardId);
 
 
         //Toolbar 적용하기 위해서 .HomeActivity Theme 제거(AndroidManifest에서)
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_board);
         setSupportActionBar(toolbar);
-        if (!(LoginStatus.getMemberID().equals(author))) {
+        if (!(LoginStatus.getMemberID().equals(author)) || image != null) {
             toolbar.setVisibility(View.GONE);
         }
 
         TextView titleTextView = (TextView) findViewById(R.id.board_title);
         titleTextView.setText(title);
+
+        if (!image.equals("")) {
+            imageView = findViewById(R.id.check_in_image);
+            imageView.setVisibility(View.VISIBLE);
+            // 디코드 해서 연결
+            back task = new back();
+            task.execute(image);
+        }
 
         TextView contentTextView = (TextView) findViewById(R.id.board_contents);
         contentTextView.setText(content);
@@ -200,4 +217,35 @@ public class ChanShowBoardActivity extends AppCompatActivity {
 
         }
     }
+
+    private class back extends AsyncTask<String, Integer,Bitmap>{
+
+        @Override
+        protected Bitmap doInBackground(String... urls) {
+            // TODO Auto-generated method stub
+            try{
+                URL myFileUrl = new URL(urls[0]);
+                HttpURLConnection conn = (HttpURLConnection)myFileUrl.openConnection();
+                conn.setDoInput(true);
+                conn.connect();
+
+                InputStream is = conn.getInputStream();
+
+                bmImg = BitmapFactory.decodeStream(is);
+
+
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+            return bmImg;
+        }
+
+        protected void onPostExecute(Bitmap img){
+            imageView.setImageBitmap(bmImg);
+        }
+
+    }
+
+
+
 }

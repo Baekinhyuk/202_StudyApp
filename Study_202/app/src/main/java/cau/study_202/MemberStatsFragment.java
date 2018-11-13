@@ -83,33 +83,12 @@ public class MemberStatsFragment extends Fragment {
                 new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        /* 더 구체적인 통계자료 볼수 있도록!
-                        final Member member = mMemberList.get(position);
+                        Intent intent = new Intent(activity, ChanShowStatActivity.class); // intent 되는 activty에 알맞은 data 출력
+                        Member currentMember = mMemberList.get(position);
+                        intent.putExtra("id", currentMember.getUserId());
 
-                        alertdialog.setMessage(member.getUserId()+"님을 신고 하시겠습니까?");
-                        // 확인버튼
-                        alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener(){
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                Intent intent = new Intent(getActivity(), ChanVoteActivity.class); // intent 되는 activty에 알맞은 data 출력
+                        startActivity(intent);
 
-                                intent.putExtra("ID", member.getUserId());
-
-                                startActivity(intent);
-
-                            }
-                        });
-                        // 취소버튼
-                        alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                            }
-                        });
-                        // 메인 다이얼로그 생성
-                        AlertDialog alert = alertdialog.create();
-                        alert.show();
-
-                    */
 
                     }
                 });

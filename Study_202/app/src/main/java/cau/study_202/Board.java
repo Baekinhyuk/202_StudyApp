@@ -12,21 +12,23 @@ public class Board {
     private String latefine;
     private String absencefine;
     private String votedId;
+    private String image;
     private int voteType;
     private int numofvoters;
     private int pros;
     private int cons;
 
-    public Board(int id, int groupId, String memberId, String title, String content) {
+    public Board(int id, int groupId, String memberId, String title, String content, String image) {
         this.id = id;
         this.groupId = groupId;
         this.memberId = memberId;
         this.title = title;
         this.content = content;
+        this.image = image;
     }
 
     public Board(int id, int groupId, String memberId, String title, String content, String attendenctime, String attendencelatetime, String latefine, String absencefine) {
-        this(id,groupId,memberId,title,content);
+        this(id,groupId,memberId,title,content,null);
         this.attendenctime = attendenctime;
         this.attendencelatetime = attendencelatetime;
         this.latefine = latefine;
@@ -34,7 +36,7 @@ public class Board {
     }
 
     public Board(int id, int groupId, String memberId, String votedId, int voteType, String content, int numofvoters, int pros, int cons) {
-        this(id, groupId, memberId, "", content);
+        this(id, groupId, memberId, "", content, null);
         if (voteType == 0)
             title = votedId + "님에 대한 출석 투표";
         else
@@ -71,6 +73,7 @@ public class Board {
     public int getCons() {return cons;}
     public int getVoteType() {return voteType;}
     public String getVotedId() {return votedId;}
+    public String getImage() {return image;}
 
 
 }
