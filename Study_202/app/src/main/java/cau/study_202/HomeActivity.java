@@ -1,10 +1,12 @@
 package cau.study_202;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -84,6 +86,36 @@ public class HomeActivity  extends AppCompatActivity
                     startActivity(i);
                 }
             });
+
+        ImageView gps=(ImageView) findViewById(R.id.gps);
+        gps.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder ad = new AlertDialog.Builder(HomeActivity.this);
+                ad.setTitle("현재위치 설정");
+                ad.setMessage("위치를 지정하시겠습니까?");
+
+                ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent i = new Intent(HomeActivity.this, Gps_attendant.class);
+                        startActivity(i);
+
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+
+                ad.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();     //닫기
+                        // Event
+                    }
+                });
+                ad.show();
+            }
+        });
 
             ImageView logout=(ImageView) findViewById(R.id.logout);
             logout.setOnClickListener(new Button.OnClickListener(){
