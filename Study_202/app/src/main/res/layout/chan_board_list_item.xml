@@ -18,7 +18,7 @@
         android:id="@+id/board_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:maxLines="2"
+        android:maxLines="1"
         android:textSize="14sp"
         tools:text="contentsdfjsdlkfjasdlkfmsdfklmsadlkcmfsdlkfcdlksfncaklnerclkewnrcklwenrklencklamdcfmdklsfcdklsmfcdklsm" />
 

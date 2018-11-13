@@ -72,15 +72,6 @@ public class MemberBoardFragment extends Fragment {
         boards = new ArrayList<Board>();
 
 
-        /* db에서 해당 그룹 멤버 가져와야 함 현재는 테스트 */
-        /*Board b1 = new Board(0, 0, "chb2561", "공부하자","공부하는거 어떤가요 제발 합시다 너네들 모하니" +
-                "제발 공부합시다 머할까 오늘 아니 머해 너네 제발 공부해라 머하니 너네 으으어으어우어우어우어우어");
-        Board b2 = new Board(1, 1, "bih2561", "공부할래요?","아니아니 우어웡울어우러울얼ㄴ이랑ㄴ러ㅣㅏ 공부하는거 어떤가요 제발 합시다 너네들 모하니" +
-                "제발 공부합시다 머할까 오늘 아니 머해 너네 제발 공부해라 머하니 너네 으으어으어우어우어우어우어");
-
-        boards.add(b1);
-        boards.add(b2);*/
-        /*db 구축전 테스트*/
         pullToRefresh = (SwipeRefreshLayout) rootView.findViewById(R.id.swiperefresh);
         pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -110,6 +101,7 @@ public class MemberBoardFragment extends Fragment {
                         intent.putExtra("content", currentBoard.getContent());
                         intent.putExtra("author", currentBoard.getMemberId());
                         intent.putExtra("id", currentBoard.getId());
+                        intent.putExtra("image", currentBoard.getImage());
 
                         startActivity(intent);
 
@@ -206,6 +198,7 @@ public class MemberBoardFragment extends Fragment {
         String TAG_CONTENT = "content";
         String TAG_GROUPID = "groupid";
         String TAG_MEMBERID = "memberid";
+        String TAG_IMAGE = "image";
 
 
         try {
@@ -221,9 +214,9 @@ public class MemberBoardFragment extends Fragment {
                 String content = item.getString(TAG_CONTENT);
                 String groupid = item.getString(TAG_GROUPID);
                 String memberid = item.getString(TAG_MEMBERID);
+                String image = item.getString(TAG_IMAGE);
 
-
-                Board boardData = new Board(Integer.parseInt(id),Integer.parseInt(groupid),memberid,title,content);
+                Board boardData = new Board(Integer.parseInt(id),Integer.parseInt(groupid),memberid,title,content,image);
 
                 boards.add(boardData);
                 adapter.notifyDataSetChanged();
