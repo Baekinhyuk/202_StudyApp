@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,22 +32,28 @@ public class ChanShowStatActivity extends AppCompatActivity {
     ArrayList<Stat> stats;
     ChanDetailStatsAdapter adapter;
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.i("ChanShowStatActivity", "hi!");
 
-        GetStatData task = new GetStatData();
-        task.execute( Phprequest.BASE_URL+"fetch_detail_stat.php?GROUPID="+LoginStatus.getGroupID()+"&ID="+id,"");
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chan_show_stat);
 
+        stats = new ArrayList<Stat>();
+        adapter = new ChanDetailStatsAdapter(this, stats);
+
+        ListView listView = findViewById(R.id.detail_stat_list);
+        listView.setAdapter(adapter);
+
         intent = getIntent();
         id = intent.getStringExtra("id");
+
+        GetStatData task = new GetStatData();
+        task.execute( Phprequest.BASE_URL+"fetch_detail_stat.php?GROUPID="+LoginStatus.getGroupID()+"&ID="+id,"");
+
+
+        TextView title = findViewById(R.id.title);
+        title.setText(id+"의 출결 내역");
 
     }
 
