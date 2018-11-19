@@ -607,8 +607,9 @@ public class CheckInFragment extends Fragment {
         try {
             Phprequest request = new Phprequest(Phprequest.BASE_URL +"get_GPS.php");
             String get_GPS = request.get_GPS(LoginStatus.getMemberID());
-            get_saveGPS(get_GPS);
+            Log.d("테스트 GPS 리턴값get_GPS값",get_GPS);
             if (get_GPS!="-1") {
+                get_saveGPS(get_GPS);
                 double distantMeter = distance(latitude, longitude, save_latitude, save_longitude);
                 //Toast.makeText(getActivity(),Double.toString(distantMeter), Toast.LENGTH_SHORT).show();
                 Log.d("테스트 GPS거리계산",Double.toString(distantMeter));
