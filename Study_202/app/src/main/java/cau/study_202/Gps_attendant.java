@@ -18,6 +18,10 @@ import android.widget.RelativeLayout;
 import com.skt.Tmap.TMapGpsManager;
 import com.skt.Tmap.TMapView;
 
+import java.net.MalformedURLException;
+
+import cau.study_202.network.Phprequest;
+
 public class Gps_attendant extends AppCompatActivity {
 
     TMapView tMapView = null;
@@ -102,7 +106,7 @@ public class Gps_attendant extends AppCompatActivity {
                 });
     }
 
-    public void designate(Location location){
+    public void designate(final Location location){
         AlertDialog.Builder ad = new AlertDialog.Builder(Gps_attendant.this);
         ad.setTitle("현재위치 설정");
         ad.setMessage("현재 위치로 지정하시겠습니까?\n"+"위도 : "+location.getLatitude()+"\n경도 : "+location.getLongitude());
@@ -110,7 +114,12 @@ public class Gps_attendant extends AppCompatActivity {
         ad.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                try {
+                    Phprequest request = new Phprequest(Phprequest.BASE_URL +"saveGPS.php");
+                    String result = request.save_GPS(LoginStatus.getMemberID(),Double.toString(location.getLatitude()),Double.toString(location.getLongitude()));
+                }catch (MalformedURLException e){
+                    e.printStackTrace();
+                }
                 finish();
                 dialog.dismiss();     //닫기
                 // Event

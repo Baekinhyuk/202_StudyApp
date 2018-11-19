@@ -18,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -31,6 +32,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -42,9 +48,11 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,6 +69,11 @@ public class CheckInFragment extends Fragment {
     String pd;
     int method;
     int state;
+
+    double latitude;
+    double longitude;
+    double save_latitude;
+    double save_longitude;
 
     static final int REQUEST_TAKE_PHOTO = 1;
     private Uri photoUri;
@@ -115,7 +128,10 @@ public class CheckInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 method = 2;
-                startLocationServiece();
+                makepd(2);
+                CheckIn task = new CheckIn();
+                task.execute( Phprequest.BASE_URL+"check_in.php","");
+                //startLocationServiece();
             }
         });
         return rootView;
@@ -150,7 +166,14 @@ public class CheckInFragment extends Fragment {
                     i.putExtra("state",0);
                     startActivity(i);
                 } else if(method == 2) { // GPS로 출석시
-
+                    startLocationServiece();
+                    Handler delayHandler = new Handler();
+                    delayHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            check_GPS(0);
+                        }
+                    }, 3000);
                 }
 
             }
@@ -170,7 +193,14 @@ public class CheckInFragment extends Fragment {
                     i.putExtra("state",1);
                     startActivity(i);
                 } else if(method == 2) { // GPS로 출석시
-
+                    startLocationServiece();
+                    Handler delayHandler = new Handler();
+                    delayHandler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            check_GPS(1);
+                        }
+                    }, 3000);
                 }
             } else if(result.equals("2")){ // 결석
                 Toast.makeText(activity,"결석",Toast.LENGTH_SHORT).show();
@@ -251,8 +281,8 @@ public class CheckInFragment extends Fragment {
                 new LocationListener() {
                     @Override
                     public void onLocationChanged(Location location) {
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
                         Activity root = getActivity();
                         Toast.makeText(root, "NETWORK\n"+"위도 : " + latitude + "\n 경도 : " + longitude, Toast.LENGTH_SHORT).show();
                         LocationManager lm = (LocationManager)getLayoutInflater().getContext().getSystemService(Context. LOCATION_SERVICE);
@@ -548,5 +578,62 @@ public class CheckInFragment extends Fragment {
         byte [] b=baos.toByteArray();
         String temp= Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
+    }
+
+    private void get_saveGPS(String result) {
+
+        String TAG_JSON="GPS_state";
+        String TAG_Latitude = "Latitude";
+        String TAG_Longitude = "Longitude";
+
+        try {
+
+            JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            JSONObject item = jsonArray.getJSONObject(0);
+
+            String s_latitude = item.getString(TAG_Latitude);
+            String s_longitude = item.getString(TAG_Longitude);
+
+            save_latitude = Double.parseDouble(s_latitude);
+            save_longitude = Double.parseDouble(s_longitude);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void check_GPS(int state){
+        try {
+            Phprequest request = new Phprequest(Phprequest.BASE_URL +"get_GPS.php");
+            String get_GPS = request.get_GPS(LoginStatus.getMemberID());
+            get_saveGPS(get_GPS);
+            if (get_GPS!="-1") {
+                double distantMeter = distance(latitude, longitude, save_latitude, save_longitude);
+                //Toast.makeText(getActivity(),Double.toString(distantMeter), Toast.LENGTH_SHORT).show();
+                Log.d("테스트 GPS거리계산",Double.toString(distantMeter));
+                if (distantMeter <= 30) {
+                    try {
+                        Phprequest request2 = new Phprequest(Phprequest.BASE_URL + "GPS_att.php");
+                        String get_GPS2 = request2.GPS_attendence(LoginStatus.getMemberID(), Integer.toString(LoginStatus.getGroupID()), Integer.toString(state));
+                    } catch (MalformedURLException e1) {
+                        e1.printStackTrace();
+                    }
+                    if(state == 1) {
+                        Toast.makeText(getActivity(), "지각하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getActivity(), "출석하였습니다", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(getActivity(), "출석가능한 거리가 아닙니다", Toast.LENGTH_SHORT).show();
+                }
+            }
+            else{
+                Toast.makeText(getActivity(), "저장되어있는 위치값이 없습니다", Toast.LENGTH_SHORT).show();
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }
     }
 }
