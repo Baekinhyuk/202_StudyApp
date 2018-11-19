@@ -1,117 +1,88 @@
 package cau.study_202;
 
-
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-
+import com.skt.Tmap.TMapGpsManager;
+import com.skt.Tmap.TMapView;
 
 public class Gps_attendant extends AppCompatActivity {
-    SupportMapFragment mapFragment;
-    GoogleMap map;
-    MarkerOptions marker;
 
+    TMapView tMapView = null;
+    TMapGpsManager tMapGps = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gps_attendant);
 
 
-        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(new OnMapReadyCallback() {
-            @Override
-            public void onMapReady(GoogleMap googleMap) {
-                Log.d("MainActivity","GoogleMap 객체가 준비됨" );
-                LatLng startstatus = new LatLng(37.560908, 126.986425);
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startstatus,10));
+        tMapView = new TMapView(Gps_attendant.this);
+        tMapGps = new TMapGpsManager(Gps_attendant.this);
 
-                map = googleMap;
-            }
-        });
+        RelativeLayout relativeLayout = findViewById(R.id.relative);
+        tMapView.setSKTMapApiKey("195b1e8a-7c4b-48cb-b1f6-81dc09eb1d1c");
+        relativeLayout.addView(tMapView);
+        tMapView.setMapType(TMapView.MAPTYPE_STANDARD);
+        tMapView.setLanguage(TMapView.LANGUAGE_KOREAN);
 
-        MapsInitializer.initialize(this);
+        tMapView.setIconVisibility(true);
+        tMapView.setZoomLevel(15);
+        tMapView.setTrackingMode(true);
+        setContentView(relativeLayout);
 
-        Button button = (Button) findViewById(R.id.button01);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button = findViewById(R.id.button01);
+        button.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                requestMyLocation();
+                setGps();
             }
         });
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            }
-            return;
-        }
-        if(map!=null){
-            map.setMyLocationEnabled(false);
-        }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            }
-            return;
-        }
-        if(map!=null){
-            map.setMyLocationEnabled(true);
-        }
-    }
-
-    public void requestMyLocation(){
-        LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            }
-            return;
+    public void setGps(){
+        final LocationManager lm = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION, android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
-
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0,
-                new LocationListener() {
+        LocationListener mLocationListener;
+        lm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, // 등록할 위치제공자(실내에선 NETWORK_PROVIDER 권장)
+                1000, // 통지사이의 최소 시간간격 (miliSecond)
+                1, // 통지사이의 최소 변경거리 (m)
+                mLocationListener = new LocationListener(){
                     @Override
-                    public void onLocationChanged(Location location) {
-                        showCurrentLocation(location);
+                    public void onLocationChanged(final Location location) {
+                        if (location != null) {
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+                            tMapView.setLocationPoint(longitude, latitude);
+                            tMapView.setCenterPoint(longitude, latitude);
+                            tMapView.setZoomLevel(18);
 
+                            LocationManager ln = (LocationManager)getLayoutInflater().getContext().getSystemService(Context. LOCATION_SERVICE);
+                            // Stop the update as soon as get the location.
+                            ln.removeUpdates(this);
+
+                            Button button2 = findViewById(R.id.button02);
+                            button2.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    designate(location);
+                                }
+                            });
+                        }
                     }
 
                     @Override
@@ -129,40 +100,6 @@ public class Gps_attendant extends AppCompatActivity {
 
                     }
                 });
-    }
-
-    public void showCurrentLocation(final Location location) {
-        LatLng curPoint = new LatLng(location.getLatitude(), location.getLongitude());
-
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(curPoint, 20));
-
-        showMarker(location);
-
-        Button designate = (Button)findViewById(R.id.button2);
-        designate.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                designate(location);
-            }
-        });
-
-    }
-
-    public void showMarker(Location location){
-        if(marker == null) {
-            marker = new MarkerOptions();
-            marker.position(new LatLng(location.getLatitude(),location.getLongitude()));
-            marker.title("현재위치");
-            marker.icon(BitmapDescriptorFactory.fromResource(R.drawable.mapflag));
-
-            map.addMarker(marker);
-
-        }
-
-        else{
-            marker.position(new LatLng(location.getLatitude()+0.01,location.getLongitude()+0.01));
-        }
     }
 
     public void designate(Location location){
