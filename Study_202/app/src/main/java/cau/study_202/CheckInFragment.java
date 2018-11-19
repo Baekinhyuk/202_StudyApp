@@ -258,6 +258,11 @@ public class CheckInFragment extends Fragment {
                         LocationManager lm = (LocationManager)getLayoutInflater().getContext().getSystemService(Context. LOCATION_SERVICE);
                         // Stop the update as soon as get the location.
                         lm.removeUpdates(this);
+
+                        double distantMeter = distance(latitude,longitude,latitude,longitude);
+                        //미터 거리 계산 2번째 latitude, longitude를 DB에서 받아오면 계산 완료
+                        //참고 사이트 http://fruitdev.tistory.com/189
+
                     }
                     @Override
                     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -269,6 +274,31 @@ public class CheckInFragment extends Fragment {
                     public void onProviderDisabled(String provider) {
                     }
                 });
+    }
+
+    private static double distance(double lat1, double lon1, double lat2, double lon2) {
+
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+
+        dist = dist * 1609.344;
+
+        return (dist);
+    }
+
+
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
     }
 
     private File createImageFile() throws IOException {
