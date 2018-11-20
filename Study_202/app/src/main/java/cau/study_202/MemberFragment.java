@@ -165,7 +165,7 @@ public class MemberFragment extends Fragment {
                 personalData.setName(name);
                 personalData.setEmail(email);
                 personalData.setTel(phone);
-                personalData.setTrust(Double.parseDouble(trust));
+                personalData.setTrust(Double.parseDouble(trust) * 100);
                 //임의로 state일단 해놓음
                 //personalData.setStates(0);
                 personalData.setStates(Integer.parseInt(att));

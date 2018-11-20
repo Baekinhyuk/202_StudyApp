@@ -34,9 +34,14 @@ if($num_rows == 0){
       // 결석으로 입력 (신뢰도 관련 처리 추가해야함)
       $query = "update study202.member set fine = fine + ".$row['absencefine']." where ID ="."'".$_POST['ID']."'";
       $result = mysqli_query($conn, $query);
-      $query = "select fine from study202.member where ID ="."'".$_POST['ID']."'";
+
+      $query = "select fine, TRUST from study202.member where ID ="."'".$_POST['ID']."'";
       $result = mysqli_query($conn, $query);
       $row = mysqli_fetch_array($result);
+      // 결석시 신뢰도
+      $query = "update study202.member set TRUST = TRUST -0.04 * ".$row['TRUST']." where ID ="."'".$_POST['ID']."'";
+      $result = mysqli_query($conn, $query);
+
       $data_stream = "'".$_POST['ID']."','".$_POST['METHOD']."','".$_POST['GROUPID']."',"."2,'".$row['fine']."'";
       $query = "insert into study202.attendence (memberID, method, groupID, state, fine) VALUES (".$data_stream.")";
       echo "2";

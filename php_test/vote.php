@@ -17,6 +17,13 @@ if($num_rows == 0) {
   $query = "insert into study202.voteresult (voteID, memberID, proandcon) values (".$data_stream.")";
   $result = mysqli_query($conn, $query);
 
+  $query = "select TRUST from study202.member where ID ="."'".$_POST['MEMBERID']."'";
+  $result = mysqli_query($conn, $query);
+  $row3 = mysqli_fetch_array($result);
+
+  $query = "update study202.member set TRUST = TRUST + 0.001 * ".$row3['TRUST']." where ID ="."'".$_POST['MEMBERID']."'";
+  $result = mysqli_query($conn, $query);
+
 
   if($result){
     if( $_POST['VOTE'] == 0 )
@@ -39,9 +46,23 @@ if($num_rows == 0) {
         $sql="update study202.attendence set state = 2 where ID=".$row2['ID'];
         $result = mysqli_query($conn,$sql);
 
+        $query = "select fine, TRUST from study202.member where ID ="."'".$row['votedID']."'";
+        $result = mysqli_query($conn, $query);
+        $row3 = mysqli_fetch_array($result);
+
+        $query = "update study202.member set TRUST = TRUST - 0.1 where ID ="."'".$row['votedID']."'";
+        $result = mysqli_query($conn, $query);
+
       }else{ // 강퇴
-          $sql="update study202.member set groupID = NULL, fine = 0 where ID ="."'".$row['votedID']."'";
-          mysqli_query($conn,$sql);
+        $query = "select fine, TRUST from study202.member where ID ="."'".$row['votedID']."'";
+        $result = mysqli_query($conn, $query);
+        $row3 = mysqli_fetch_array($result);
+
+        $query = "update study202.member set TRUST = TRUST - 0.2 where ID ="."'".$row['votedID']."'";
+        $result = mysqli_query($conn, $query);
+
+        $sql="update study202.member set groupID = NULL, fine = 0 where ID ="."'".$row['votedID']."'";
+        mysqli_query($conn,$sql);
       }
 
       $sql="delete from study202.vote where ID='".$_POST['ID']."'";
