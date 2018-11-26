@@ -70,11 +70,6 @@ public class CheckInFragment extends Fragment {
     int method;
     int state;
 
-    double latitude;
-    double longitude;
-    double save_latitude;
-    double save_longitude;
-
     static final int REQUEST_TAKE_PHOTO = 1;
     private Uri photoUri;
     boolean check = true;
@@ -131,7 +126,6 @@ public class CheckInFragment extends Fragment {
                 makepd(2);
                 CheckIn task = new CheckIn();
                 task.execute( Phprequest.BASE_URL+"check_in.php","");
-                //startLocationServiece();
             }
         });
         return rootView;
@@ -166,14 +160,9 @@ public class CheckInFragment extends Fragment {
                     i.putExtra("state",0);
                     startActivity(i);
                 } else if(method == 2) { // GPS로 출석시
-                    startLocationServiece();
-                    Handler delayHandler = new Handler();
-                    delayHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            check_GPS(0);
-                        }
-                    }, 3000);
+                    Intent i = new Intent(getActivity(), GpsActivity.class);
+                    i.putExtra("state",0);
+                    startActivity(i);
                 }
 
             }
@@ -193,14 +182,9 @@ public class CheckInFragment extends Fragment {
                     i.putExtra("state",1);
                     startActivity(i);
                 } else if(method == 2) { // GPS로 출석시
-                    startLocationServiece();
-                    Handler delayHandler = new Handler();
-                    delayHandler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            check_GPS(1);
-                        }
-                    }, 3000);
+                    Intent i = new Intent(getActivity(), GpsActivity.class);
+                    i.putExtra("state",1);
+                    startActivity(i);
                 }
             } else if(result.equals("2")){ // 결석
                 Toast.makeText(activity,"결석",Toast.LENGTH_SHORT).show();
@@ -243,92 +227,6 @@ public class CheckInFragment extends Fragment {
             reader.close();
             return jsonHtml.toString();
         }
-    }
-
-    public void startLocationServiece() {
-        LocationManager manager = (LocationManager) getLayoutInflater().getContext().getSystemService(Context.LOCATION_SERVICE);
-        Activity root = getActivity();
-        if (ActivityCompat.checkSelfPermission(root, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(root, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
-            }
-            return;
-        }
-        manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,
-                new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        double latitude = location.getLatitude();
-                        double longitude = location.getLongitude();
-                        Activity root = getActivity();
-                        Toast.makeText(root, "GPS\n"+"위도 : " + latitude + "\n 경도 : " + longitude, Toast.LENGTH_SHORT).show();
-                        LocationManager lm = (LocationManager)getLayoutInflater().getContext().getSystemService(Context. LOCATION_SERVICE);
-                        // Stop the update as soon as get the location.
-                        lm.removeUpdates(this);
-                    }
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                    }
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                    }
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                    }
-                });
-        manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                new LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        latitude = location.getLatitude();
-                        longitude = location.getLongitude();
-                        Activity root = getActivity();
-                        Toast.makeText(root, "NETWORK\n"+"위도 : " + latitude + "\n 경도 : " + longitude, Toast.LENGTH_SHORT).show();
-                        LocationManager lm = (LocationManager)getLayoutInflater().getContext().getSystemService(Context. LOCATION_SERVICE);
-                        // Stop the update as soon as get the location.
-                        lm.removeUpdates(this);
-
-                        double distantMeter = distance(latitude,longitude,latitude,longitude);
-                        //미터 거리 계산 2번째 latitude, longitude를 DB에서 받아오면 계산 완료
-                        //참고 사이트 http://fruitdev.tistory.com/189
-
-                    }
-                    @Override
-                    public void onStatusChanged(String provider, int status, Bundle extras) {
-                    }
-                    @Override
-                    public void onProviderEnabled(String provider) {
-                    }
-                    @Override
-                    public void onProviderDisabled(String provider) {
-                    }
-                });
-    }
-
-    private static double distance(double lat1, double lon1, double lat2, double lon2) {
-
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-
-        dist = dist * 1609.344;
-
-        return (dist);
-    }
-
-
-    // This function converts decimal degrees to radians
-    private static double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    // This function converts radians to decimal degrees
-    private static double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
     }
 
     private File createImageFile() throws IOException {
@@ -580,61 +478,4 @@ public class CheckInFragment extends Fragment {
         return temp;
     }
 
-    private void get_saveGPS(String result) {
-
-        String TAG_JSON="GPS_state";
-        String TAG_Latitude = "Latitude";
-        String TAG_Longitude = "Longitude";
-
-        try {
-
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
-            JSONObject item = jsonArray.getJSONObject(0);
-
-            String s_latitude = item.getString(TAG_Latitude);
-            String s_longitude = item.getString(TAG_Longitude);
-
-            save_latitude = Double.parseDouble(s_latitude);
-            save_longitude = Double.parseDouble(s_longitude);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void check_GPS(int state){
-        try {
-            Phprequest request = new Phprequest(Phprequest.BASE_URL +"get_GPS.php");
-            String get_GPS = request.get_GPS(LoginStatus.getMemberID());
-            Log.d("테스트 GPS 리턴값get_GPS값",get_GPS);
-            if (get_GPS!="-1") {
-                get_saveGPS(get_GPS);
-                double distantMeter = distance(latitude, longitude, save_latitude, save_longitude);
-                //Toast.makeText(getActivity(),Double.toString(distantMeter), Toast.LENGTH_SHORT).show();
-                Log.d("테스트 GPS거리계산",Double.toString(distantMeter));
-                if (distantMeter <= 30) {
-                    try {
-                        Phprequest request2 = new Phprequest(Phprequest.BASE_URL + "GPS_att.php");
-                        String get_GPS2 = request2.GPS_attendence(LoginStatus.getMemberID(), Integer.toString(LoginStatus.getGroupID()), Integer.toString(state));
-                    } catch (MalformedURLException e1) {
-                        e1.printStackTrace();
-                    }
-                    if(state == 1) {
-                        Toast.makeText(getActivity(), "지각하였습니다", Toast.LENGTH_SHORT).show();
-                    }
-                    else{
-                        Toast.makeText(getActivity(), "출석하였습니다", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "출석가능한 거리가 아닙니다", Toast.LENGTH_SHORT).show();
-                }
-            }
-            else{
-                Toast.makeText(getActivity(), "저장되어있는 위치값이 없습니다", Toast.LENGTH_SHORT).show();
-            }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-    }
 }

@@ -6,12 +6,12 @@ $id = mysqli_real_escape_string($conn, $_POST['ID']);
 $query = "select member.Latitude,member.Longitude from study202.member where member.ID = '$id'";
 
 $result = mysqli_query($conn, $query);
+$row = mysqli_fetch_array($result);
 
     if(empty($row[Latitude]) || empty($row[Longitude])){
 	echo "-1";
     }	
     else{
-	$row = mysqli_fetch_array($result);
 	echo "{";
 	echo "\"GPS_state\":";
 	echo "[";
