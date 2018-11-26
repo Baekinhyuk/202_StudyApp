@@ -3,9 +3,11 @@ package cau.study_202;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -86,14 +88,8 @@ public class MemberFragment extends Fragment {
     }
 
     private void accept_member_list(View rootView,final ArrayList<Member> mMemberList){
-        try {
-            Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_output.php");
-            String result = request.memberoutput(Integer.toString(LoginStatus.getGroupID()));
-            show_member(result,mMemberList);
-            //Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+        //서버와의 연동하는 부분을 함수로 처리
+        member_output();
         ChanMemberAdapter adapter = new ChanMemberAdapter(getActivity(), mMemberList);
 
         ListView listview = (ListView) rootView.findViewById(R.id.list);
@@ -130,6 +126,57 @@ public class MemberFragment extends Fragment {
                         alert.show();
                     }
                 });
+    }
+    private void member_output(){
+        try {
+            Phprequest request = new Phprequest(Phprequest.BASE_URL +"member_output.php");
+            String result = request.memberoutput(Integer.toString(LoginStatus.getGroupID()));
+            show_member(result,mMemberList);
+            //Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            Log.i("회원목록출력오류","try-catch문 NULLPOINTER에러");
+            GetData task = new GetData();
+            task.execute();
+            e.printStackTrace();
+        }
+    }
+
+    private class GetData extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressDialog = new ProgressDialog(activity);
+
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMessage("인터넷 연결을 재시도 중입니다.");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            member_output();
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                for (int i = 0; i < 100; i++) {
+                    progressDialog.setProgress(i);
+                    Thread.sleep(10);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
     }
 
     private void show_member(String result, ArrayList<Member> mMemberList) {

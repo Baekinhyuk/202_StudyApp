@@ -148,23 +148,7 @@ public class RegistActivity extends AppCompatActivity {
                     editID.requestFocus();
                     return;
                 }
-                try {
-                    Phprequest request = new Phprequest(Phprequest.BASE_URL +"sameIDcheck.php");
-                    String result = request.sameIDcheck(String.valueOf(editID.getText()));
-                    if(Integer.parseInt(result)==0){
-                        Toast.makeText(getApplication(),"사용가능한 ID입니다",Toast.LENGTH_SHORT).show();
-                        IDcheck = true;
-                        //체크했을 당시에 아이디를 임시로 저장
-                        CheckID = String.valueOf(editID.getText());
-                    }
-                    if(Integer.parseInt(result)==1){
-                        Toast.makeText(getApplication(),"사용불가능한 ID입니다",Toast.LENGTH_SHORT).show();
-                        IDcheck = false;
-                    }
-                    //Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+                confirm();
             }
         });
 
@@ -243,26 +227,132 @@ public class RegistActivity extends AppCompatActivity {
                     editID.requestFocus();
                     return;
                 }
-                try {
-                    if(IDcheck==true) {
-                        Phprequest request = new Phprequest(Phprequest.BASE_URL + "member_regist.php");
-                        String result = request.registmember(String.valueOf(editID.getText()), String.valueOf(editPassword.getText()), String.valueOf(editName.getText()), String.valueOf(editEmail.getText()), String.valueOf(editPhone.getText()), String.valueOf(editBirth.getText()));
-                        if (result.equals("1")) {
-                            Toast.makeText(getApplication(), "정상적으로 가입되었습니다.", Toast.LENGTH_SHORT).show();
-                            finish();
-                        } else {
-                            Toast.makeText(getApplication(), "가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }catch (MalformedURLException e){
-                    e.printStackTrace();
-                }
+                sign_member();
             }
         });
 
     }
 
+    private void confirm(){
+        try {
+            Phprequest request = new Phprequest(Phprequest.BASE_URL +"sameIDcheck.php");
+            String result = request.sameIDcheck(String.valueOf(editID.getText()));
+            if(Integer.parseInt(result)==0){
+                Toast.makeText(getApplication(),"사용가능한 ID입니다",Toast.LENGTH_SHORT).show();
+                IDcheck = true;
+                //체크했을 당시에 아이디를 임시로 저장
+                CheckID = String.valueOf(editID.getText());
+            }
+            if(Integer.parseInt(result)==1){
+                Toast.makeText(getApplication(),"사용불가능한 ID입니다",Toast.LENGTH_SHORT).show();
+                IDcheck = false;
+            }
+            //Toast.makeText(getActivity(),result,Toast.LENGTH_SHORT).show();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            Log.i("회원가입확인오류","try-catch문 NULLPOINTER에러");
+            GetData task = new GetData();
+            task.execute();
+            e.printStackTrace();
+        }catch (NumberFormatException e){
+            Log.i("회원가입확인오류","try-catch문 NumberFormatException에러");
+            GetData task = new GetData();
+            task.execute();
+            e.printStackTrace();
+        }
+    }
+    private class GetData extends AsyncTask<Void, Void, Void> {
 
+        ProgressDialog progressDialog = new ProgressDialog(RegistActivity.this);
+
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMessage("인터넷 연결을 재시도 중입니다.");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            confirm();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                for (int i = 0; i < 100; i++) {
+                    progressDialog.setProgress(i);
+                    Thread.sleep(10);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private void sign_member(){
+        try {
+            if(IDcheck==true) {
+                Phprequest request = new Phprequest(Phprequest.BASE_URL + "member_regist.php");
+                String result = request.registmember(String.valueOf(editID.getText()), String.valueOf(editPassword.getText()), String.valueOf(editName.getText()), String.valueOf(editEmail.getText()), String.valueOf(editPhone.getText()), String.valueOf(editBirth.getText()));
+                if (result.equals("1")) {
+                    Toast.makeText(getApplication(), "정상적으로 가입되었습니다.", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(getApplication(), "가입에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            Log.i("회원가입오류","try-catch문 NULLPOINTER에러");
+            GetData2 task2 = new GetData2();
+            task2.execute();
+            e.printStackTrace();
+        }
+    }
+
+    private class GetData2 extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog progressDialog = new ProgressDialog(RegistActivity.this);
+
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            progressDialog.setMessage("인터넷 연결을 재시도 중입니다.");
+            progressDialog.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            progressDialog.dismiss();
+            sign_member();
+        }
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            try {
+                for (int i = 0; i < 100; i++) {
+                    progressDialog.setProgress(i);
+                    Thread.sleep(10);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
 
     public boolean checkEmailForm(String src){              //이메일 형식검사
         String emailRegex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
