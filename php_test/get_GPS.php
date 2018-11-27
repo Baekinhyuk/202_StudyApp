@@ -8,7 +8,7 @@ $query = "select member.Latitude,member.Longitude from study202.member where mem
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result);
 
-    if(empty($row[Latitude]) || empty($row[Longitude])){
+    if(empty($row['Latitude']) || empty($row['Longitude'])){
 	echo "-1";
     }	
     else{
@@ -21,6 +21,6 @@ $row = mysqli_fetch_array($result);
 	echo "]";
 	echo "}";
     }
-    
+
     mysqli_close($conn);
 ?>
