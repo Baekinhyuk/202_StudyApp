@@ -21,7 +21,7 @@ if($num_rows == 0) {
   $result = mysqli_query($conn, $query);
   $row3 = mysqli_fetch_array($result);
 
-  $query = "update study202.member set TRUST = TRUST + 0.001 * ".$row3['TRUST']." where ID ="."'".$_POST['MEMBERID']."'";
+  $query = "update study202.member set TRUST = TRUST + 0.001 * (1 - ".$row3['TRUST']." ) where ID ="."'".$_POST['MEMBERID']."'";
   $result = mysqli_query($conn, $query);
 
 

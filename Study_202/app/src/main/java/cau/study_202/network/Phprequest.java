@@ -134,7 +134,7 @@ public class Phprequest {
 
     public String save_GPS(final String ID,final String Latitude,final String Longitude){
         try {
-            String postData = "ID=" + ID+ "&" +"Latitude=" + Latitude+ "&" +"Longitude=" + Longitude;
+            String postData = "ID=" + ID+ "&" +"Latitude=" + Latitude+ "&" +"Longitude=" + Longitude + "&" + "GROUPID=" + LoginStatus.getGroupID();
             return accept(postData);
         }
         catch (Exception e) {
