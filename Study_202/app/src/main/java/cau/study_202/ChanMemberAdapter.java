@@ -47,7 +47,7 @@ public class ChanMemberAdapter extends ArrayAdapter<Member> {
         // 신뢰도
         TextView trustTextView = (TextView) listItemView.findViewById(R.id.trust);
 
-        trustTextView.setText("신뢰도: " +currentMember.getTrust());
+        trustTextView.setText("신뢰도: " +String.format("%.2f",currentMember.getTrust()));
 
         // leader 이미지
         ImageView leaderImageView = (ImageView) listItemView.findViewById(R.id.leader_image);

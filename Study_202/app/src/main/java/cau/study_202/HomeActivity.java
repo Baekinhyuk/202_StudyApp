@@ -91,6 +91,11 @@ public class HomeActivity  extends AppCompatActivity
         gps.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if(LoginStatus.getGroupID() == -1) {
+                    Toast.makeText(HomeActivity.this,"가입된 그룹이 있어야 합니다.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 AlertDialog.Builder ad = new AlertDialog.Builder(HomeActivity.this);
                 ad.setTitle("현재위치 설정");
                 ad.setMessage("위치를 지정하시겠습니까?");

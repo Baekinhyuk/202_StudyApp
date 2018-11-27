@@ -18,7 +18,7 @@ $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_array($result);
 
 if($_POST['state'] == 0){ // 출석 시 신뢰도 처리
-  $query = "update study202.member set TRUST = TRUST + 0.01 * ".$row['TRUST']." where ID ="."'".$_POST['memberID']."'";
+  $query = "update study202.member set TRUST = TRUST + 0.01 * (1 - ".$row['TRUST']." ) where ID ="."'".$_POST['memberID']."'";
   $result = mysqli_query($conn, $query);
 }
 
