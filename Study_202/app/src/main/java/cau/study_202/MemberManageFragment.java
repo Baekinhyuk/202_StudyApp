@@ -47,6 +47,11 @@ public class MemberManageFragment extends Fragment {
     SwipeRefreshLayout pullToRefresh;
     AlertDialog.Builder alertdialog;
     String pd;
+    TextView presentTime;
+    TextView lateTime;
+    TextView lateFine;
+    TextView absentFine;
+
 
     public MemberManageFragment() {
         // Required empty public constructor
@@ -84,6 +89,14 @@ public class MemberManageFragment extends Fragment {
         members = new ArrayList<Member>();
 
         adapter = new ChanWaitingAdapter(getActivity(), members);
+
+        presentTime = rootView.findViewById(R.id.present_time);
+        lateTime = rootView.findViewById(R.id.latetime);
+        lateFine = rootView.findViewById(R.id.latefine);
+        absentFine = rootView.findViewById(R.id.absentfine);
+
+        GetRuleData ruletask = new GetRuleData();
+        ruletask.execute(Phprequest.BASE_URL+"fetch_group_rule.php?ID="+LoginStatus.getGroupID(),"");
 
         ListView listview = (ListView) rootView.findViewById(R.id.watinglist);
         listview.setAdapter(adapter);
@@ -424,5 +437,109 @@ public class MemberManageFragment extends Fragment {
             reader.close();
             return jsonHtml.toString();
         }
+    }
+
+    public class GetRuleData extends AsyncTask<String, Void, String> {
+
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            showResult1(result);
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            String serverURL = params[0];
+            HttpURLConnection httpURLConnection = null;
+
+            try {
+
+                URL url = new URL(serverURL);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+
+
+                httpURLConnection.setReadTimeout(5000);
+                httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("GET");
+
+                httpURLConnection.connect();
+
+                InputStream inputStream;
+                if(httpURLConnection != null) {
+                    inputStream = httpURLConnection.getInputStream();
+                }
+                else{
+                    inputStream = httpURLConnection.getErrorStream();
+                }
+
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                StringBuilder sb = new StringBuilder();
+                String line;
+
+                while((line = bufferedReader.readLine()) != null){
+                    sb.append(line);
+                }
+
+                bufferedReader.close();
+
+                return sb.toString().trim();
+
+
+            } catch (Exception e) {
+
+                Log.d("http", "GetData : Error ", e);
+                errorString = e.toString();
+
+                return null;
+            }
+
+        }
+    }
+
+    public void showResult1(String mJsonString){
+
+        String TAG_JSON="rule";
+        String TAG_att = "attendencetime";
+        String TAG_atlt = "attendencelatetime";
+        String TAG_atlf = "latefine";
+        String TAG_ataf = "absencefine";
+
+        try {
+
+            JSONObject jsonObject = new JSONObject(mJsonString);
+            JSONArray jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            for(int i=0;i<jsonArray.length();i++){
+
+                JSONObject item = jsonArray.getJSONObject(i);
+
+                String att = item.getString(TAG_att);
+                String atlt = item.getString(TAG_atlt);
+                String lf = item.getString(TAG_atlf);
+                String af = item.getString(TAG_ataf);
+
+                presentTime.setText(att);
+                lateTime.setText(atlt);
+                lateFine.setText(lf);
+                absentFine.setText(af);
+            }
+
+        } catch (JSONException e) {
+
+            Log.d("listview에 추가", "showResult : ", e);
+        }
+
     }
 }
