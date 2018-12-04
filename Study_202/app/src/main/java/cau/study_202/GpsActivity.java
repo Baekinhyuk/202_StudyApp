@@ -176,7 +176,7 @@ public class GpsActivity extends AppCompatActivity {
                 //Toast.makeText(getActivity(),Double.toString(distantMeter), Toast.LENGTH_SHORT).show();
                 Log.i("GPS 위도결과","latitude : "+Double.toString(latitude)+" longitude : "+Double.toString(longitude)+" save_latitude : "+Double.toString(save_latitude)+" save_longitude : "+Double.toString(save_longitude));
                 Log.i("테스트 GPS거리계산",Double.toString(distantMeter));
-                if (distantMeter >= 0) {
+                if (distantMeter <= 50) {
                     try {
                         Phprequest request2 = new Phprequest(Phprequest.BASE_URL + "GPS_att.php");
                         String get_GPS2 = request2.GPS_attendence(LoginStatus.getMemberID(), Integer.toString(LoginStatus.getGroupID()), Integer.toString(state));

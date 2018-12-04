@@ -161,7 +161,8 @@ public class MemberFragment extends Fragment {
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             progressDialog.dismiss();
-            member_output();
+            mMemberList.clear();
+            accept_member_list(rootView,mMemberList);
         }
 
 
